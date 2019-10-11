@@ -15,9 +15,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RazorpayContextListener implements ServletContextListener {
+public class ApplicationContextListener implements ServletContextListener {
 
-	private static final Logger LOGGER = Logger.getLogger(RazorpayContextListener.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ApplicationContextListener.class.getName());
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {

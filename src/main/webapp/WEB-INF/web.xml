@@ -4,12 +4,12 @@
 
 <web-app>
 
-    <display-name>Razorpay Web Integration Demo</display-name>
+    <display-name>Paytm Web Integration Demo</display-name>
     
 
     <!--<filter>
         <filter-name>RequestFilter</filter-name>
-        <filter-class>rc.demo.razorpay.filters.RequestFilter</filter-class>
+        <filter-class>rc.demo.app.filters.RequestFilter</filter-class>
     </filter>
 
     <filter-mapping>
@@ -18,42 +18,42 @@
     </filter-mapping>-->
 
     <listener>
-        <listener-class>rc.demo.razorpay.listeners.RazorpayContextListener</listener-class>
+        <listener-class>rc.demo.app.listeners.ApplicationContextListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>RegistrationController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.RegistrationController</servlet-class>
+        <servlet-class>rc.demo.app.controller.RegistrationController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.LoginController</servlet-class>
+        <servlet-class>rc.demo.app.controller.LoginController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>LogOutController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.LogOutController</servlet-class>
+        <servlet-class>rc.demo.app.controller.LogOutController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>PasswordController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.PasswordController</servlet-class>
+        <servlet-class>rc.demo.app.controller.PasswordController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>CartController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.CartController</servlet-class>
+        <servlet-class>rc.demo.app.controller.CartController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>OrderController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.OrderController</servlet-class>
+        <servlet-class>rc.demo.app.controller.OrderController</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>PaymentController</servlet-name>
-        <servlet-class>rc.demo.razorpay.controller.PaymentController</servlet-class>
+        <servlet-class>rc.demo.app.controller.PaymentController</servlet-class>
     </servlet>
 
     <servlet-mapping>
