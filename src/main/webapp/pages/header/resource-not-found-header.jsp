@@ -1,3 +1,4 @@
+<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
 <%@page import="rc.demo.razorpay.models.User"%>
 <%@page import="rc.demo.razorpay.SessionAttributes"%>
 <%
@@ -5,7 +6,7 @@
 %>
 
 <div class="caption">
-	Razorpay Demo : HTTP Status 404
+	<%= ApplicationProperties.getValue("app.title") %> Demo : HTTP Status 404
 </div>
 <div class="user-strip">
 	<%

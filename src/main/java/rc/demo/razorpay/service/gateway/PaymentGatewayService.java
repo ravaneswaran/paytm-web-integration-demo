@@ -11,7 +11,7 @@ import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 
 import rc.demo.razorpay.models.PaymentTransaction;
-import rc.demo.razorpay.properties.RazorPayProperties;
+import rc.demo.razorpay.properties.ApplicationProperties;
 
 public class PaymentGatewayService {
 
@@ -20,8 +20,8 @@ public class PaymentGatewayService {
 	}
 
 	public static List<PaymentTransaction> listPaymentTransactions() throws RazorpayException {
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 
 		JSONObject fetchAllPaymentsRequest = new JSONObject();
 		fetchAllPaymentsRequest.put("count", 100);
@@ -68,8 +68,8 @@ public class PaymentGatewayService {
 	}
 
 	public static PaymentTransaction fetchPaymentTransaction(String paymentId) throws RazorpayException {
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 		
 		Payment payment = razorpayClient.Payments.fetch(paymentId);
 		

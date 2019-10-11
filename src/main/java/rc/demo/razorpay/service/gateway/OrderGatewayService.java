@@ -14,15 +14,15 @@ import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
 
 import rc.demo.razorpay.models.OrderTransaction;
-import rc.demo.razorpay.properties.RazorPayProperties;
+import rc.demo.razorpay.properties.ApplicationProperties;
 
 public class OrderGatewayService {
 
 	public static OrderTransaction createNewOrderTransaction(long amount, String currency, int receiptNumber,
 			int paymentCapture) throws IOException, RazorpayException, JAXBException {
 
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 
 		JSONObject orderCreateRequest = new JSONObject();
 
@@ -52,8 +52,8 @@ public class OrderGatewayService {
 
 	public static OrderTransaction fetchOrderTransaction(String orderId) throws RazorpayException {
 
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 
 		Order oldOrder = razorpayClient.Orders.fetch(orderId);
 
@@ -76,8 +76,8 @@ public class OrderGatewayService {
 
 	public static OrderTransaction cancelOrder(String orderId) throws RazorpayException {
 
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 
 		Order oldOrder = razorpayClient.Orders.fetch(orderId);
 
@@ -99,8 +99,8 @@ public class OrderGatewayService {
 	}
 
 	public static List<OrderTransaction> listOrderTransactions() throws RazorpayException {
-		RazorpayClient razorpayClient = new RazorpayClient(RazorPayProperties.getKeyId(),
-				RazorPayProperties.getKeySecret());
+		RazorpayClient razorpayClient = new RazorpayClient(ApplicationProperties.getKeyId(),
+				ApplicationProperties.getKeySecret());
 
 		List<Order> orders = razorpayClient.Orders.fetchAll();
 

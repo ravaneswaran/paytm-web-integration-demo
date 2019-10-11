@@ -5,9 +5,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RazorPayProperties {
+public class ApplicationProperties {
 
-    private static final Logger LOGGER = Logger.getLogger(RazorPayProperties.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ApplicationProperties.class.getName());
 
     private static Properties razorPayProperties;
 
@@ -15,7 +15,7 @@ public class RazorPayProperties {
         razorPayProperties = System.getProperties();
         //loading the main property file
         try {
-            razorPayProperties.load(RazorPayProperties.class.getClassLoader().getResourceAsStream("razorpay.properties"));
+            razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app.properties"));
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -27,26 +27,26 @@ public class RazorPayProperties {
 
         if ("development".equals(operationMode)) {
             try {
-                razorPayProperties.load(RazorPayProperties.class.getClassLoader().getResourceAsStream("razorpay-dev.properties"));
+                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-dev.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if ("testing".equals(operationMode)) {
             try {
-                razorPayProperties.load(RazorPayProperties.class.getClassLoader().getResourceAsStream("razorpay-test.properties"));
+                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-test.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
         } else {
             try {
-                razorPayProperties.load(RazorPayProperties.class.getClassLoader().getResourceAsStream("razorpay-prod.properties"));
+                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-prod.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
         }
     }
 
-    public RazorPayProperties() {
+    public ApplicationProperties() {
     }
 
     public static final String getKeyId() {

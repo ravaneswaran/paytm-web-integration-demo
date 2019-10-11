@@ -1,5 +1,7 @@
+<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
+
 <div class="caption">
-	Razorpay Demo : Login
+	<%= ApplicationProperties.getValue("app.title") %> Demo : Login
 </div>
 <div class="user-strip">
 	<div class="page-box">		

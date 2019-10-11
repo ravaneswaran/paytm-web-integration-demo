@@ -1,7 +1,7 @@
 <%@page import="rc.demo.razorpay.models.User"%>
 <%@page import="rc.demo.razorpay.service.gateway.OrderGatewayService"%>
 <%@page import="rc.demo.razorpay.models.OrderTransaction"%>
-<%@page import="rc.demo.razorpay.properties.RazorPayProperties"%>
+<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
 <%@page import="rc.demo.razorpay.util.NumberFormatterUtil"%>
 <%@page import="rc.demo.razorpay.models.Product"%>
 <%@page import="rc.demo.razorpay.service.local.OrderProductJoinLocalService"%>
@@ -23,44 +23,44 @@
 		<div class="order-details-content-body-left-panel">
 			<%
 				long totalPrice = 0l;
-				long gst = 0l;
-				if(null != sessionOrder){
+					long gst = 0l;
+					if(null != sessionOrder){
 			%>
-					<div class="order-details-content-body-left-panel-header">Order : <%= sessionOrder.getId() %></div>
+					<div class="order-details-content-body-left-panel-header">Order : <%=sessionOrder.getId()%></div>
 			<%
-					List<OrderProductJoin> orderProductJoins = OrderProductJoinLocalService.listOrderProductJoinsByOrderId(sessionOrder.getId());
-					if(null != orderProductJoins && !orderProductJoins.isEmpty()){
-						for(OrderProductJoin orderProductJoin : orderProductJoins){
-							Product product = orderProductJoin.getProduct();
-							totalPrice += product.getPrice();
-							gst += (product.getPrice() * 5) / 100;
+				List<OrderProductJoin> orderProductJoins = OrderProductJoinLocalService.listOrderProductJoinsByOrderId(sessionOrder.getId());
+						if(null != orderProductJoins && !orderProductJoins.isEmpty()){
+							for(OrderProductJoin orderProductJoin : orderProductJoins){
+								Product product = orderProductJoin.getProduct();
+								totalPrice += product.getPrice();
+								gst += (product.getPrice() * 5) / 100;
 			%>
 							<table class="order-details-content-body-left-panel-outer-table">
 								<tbody>
 									<tr>
 										<td colspan="3" class="order-details-content-body-left-panel-outer-table-image" style="border: 0px solid red;width:100px;">
-											<img src="<%= product.getImageLocation()%>"/>
+											<img src="<%=product.getImageLocation()%>"/>
 										</td>
 										<td>
 											<table class="order-details-content-body-left-panel-inner-table">
 												<tbody>
 													<tr>
 														<td class="product-spec-property-name">Name</td>
-														<td class="product-spec-property-value"><%= product.getName() %></td>
+														<td class="product-spec-property-value"><%=product.getName()%></td>
 														<td class="product-spec-property-name">RAM</td>
-														<td class="product-spec-property-value"><%= product.getRam() %></td>
+														<td class="product-spec-property-value"><%=product.getRam()%></td>
 													</tr>
 													<tr>
 														<td class="product-spec-property-name">Battery</td>
-														<td class="product-spec-property-value"><%= product.getBattery() %></td>
+														<td class="product-spec-property-value"><%=product.getBattery()%></td>
 														<td class="product-spec-property-name">Camera</td>
-														<td class="product-spec-property-value"><%= product.getCamera() %></td>
+														<td class="product-spec-property-value"><%=product.getCamera()%></td>
 													</tr>
 													<tr>
 														<td class="product-spec-property-name">Performance</td>
-														<td class="product-spec-property-value"><%= product.getPerformance() %></td>
+														<td class="product-spec-property-value"><%=product.getPerformance()%></td>
 														<td class="product-spec-property-name">Price</td>
-														<td class="product-spec-property-value"><%= product.getFormattedPrice() %></td>
+														<td class="product-spec-property-value"><%=product.getFormattedPrice()%></td>
 													</tr>
 												</tbody>
 											</table>
@@ -69,14 +69,14 @@
 								</tbody>
 							</table>
 			<%
+				}
 						}
 					}
-				}
 			%>
 		</div>
 		<%
-			String key = RazorPayProperties.getKeyId();
-	    	OrderTransaction orderTransaction =  OrderGatewayService.createNewOrderTransaction(totalPrice + (2 * gst), "INR", 1, 1);
+			String key = ApplicationProperties.getKeyId();
+			    	OrderTransaction orderTransaction =  OrderGatewayService.createNewOrderTransaction(totalPrice + (2 * gst), "INR", 1, 1);
 		%>
 		<div class="order-details-content-body-right-panel">
 			<form action="/order/transaction?cmd=new&checkout-type=auto" method="POST" class="order-details-content-body-right-panel-form-upper">

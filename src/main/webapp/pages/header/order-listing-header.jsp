@@ -1,3 +1,4 @@
+<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
 <%@page import="rc.demo.razorpay.SessionAttributes"%>
 <%@page import="rc.demo.razorpay.models.User"%>
 
@@ -6,7 +7,7 @@
 %>
 
 <div class="caption">
-	Razorpay Demo : Order Listing
+	<%= ApplicationProperties.getValue("app.title") %> Demo : Order Listing
 </div>
 <div class="user-strip">
 	<%

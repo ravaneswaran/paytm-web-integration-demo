@@ -1,8 +1,10 @@
+<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
+
 <%@ include file="../pages/redirect-to-product-listing-if-session-exists.jsp" %>
 
 <html>
    <head>
-      <title>Razorpay Login</title>
+      <title><%= ApplicationProperties.getValue("app.title") %> Demo Login</title>
       <jsp:include page="../pages/css/main-css.jsp"/>
       <jsp:include page="../pages/css/login/login-css.jsp"/>
       <jsp:include page="../pages/javascript/main-javascript.jsp"/>
