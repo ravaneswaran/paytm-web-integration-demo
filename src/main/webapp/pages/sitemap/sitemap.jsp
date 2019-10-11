@@ -1,5 +1,5 @@
-<%@page import="rc.demo.razorpay.SessionAttributes"%>
-<%@page import="rc.demo.razorpay.models.User"%>
+<%@page import="rc.demo.app.SessionAttributes"%>
+<%@page import="rc.demo.app.models.User"%>
 
 <%
 	User sessionUser = (User)session.getAttribute(SessionAttributes.SESSION_USER);

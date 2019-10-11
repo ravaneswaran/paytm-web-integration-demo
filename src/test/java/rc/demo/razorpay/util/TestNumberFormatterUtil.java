@@ -1,7 +1,7 @@
 package rc.demo.razorpay.util;
 
 import junit.framework.TestCase;
-import rc.demo.razorpay.util.NumberFormatterUtil;
+import rc.demo.app.util.NumberFormatterUtil;
 
 public class TestNumberFormatterUtil extends TestCase {
 	

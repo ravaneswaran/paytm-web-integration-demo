@@ -2,7 +2,7 @@ package rc.demo.razorpay.properties;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import rc.demo.razorpay.properties.ApplicationProperties;
+import rc.demo.app.properties.ApplicationProperties;
 
 public class TestApplicationProperties extends TestCase {
 

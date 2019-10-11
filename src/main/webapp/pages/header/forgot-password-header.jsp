@@ -1,4 +1,4 @@
-<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
+<%@page import="rc.demo.app.properties.ApplicationProperties"%>
 
 <div class="caption">
 	<%= ApplicationProperties.getValue("app.title") %> Demo : Forgot Password

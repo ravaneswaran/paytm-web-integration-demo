@@ -1,4 +1,4 @@
-<%@page import="rc.demo.razorpay.properties.ApplicationProperties"%>
+<%@page import="rc.demo.app.properties.ApplicationProperties"%>
 
 <%@ include file="../pages/redirect-to-product-listing-if-session-exists.jsp" %>
 

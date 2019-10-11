@@ -4,13 +4,13 @@
 
     <persistence-unit name="razorpay" transaction-type="RESOURCE_LOCAL">
 
-        <class>rc.demo.razorpay.models.OrderTransaction</class>
-        <class>rc.demo.razorpay.models.PaymentTransaction</class>
+        <class>rc.demo.app.models.OrderTransaction</class>
+        <class>rc.demo.app.models.PaymentTransaction</class>
 
-        <class>rc.demo.razorpay.models.User</class>
-        <class>rc.demo.razorpay.models.Product</class>
-        <class>rc.demo.razorpay.models.Order</class>
-        <class>rc.demo.razorpay.models.OrderProductJoin</class>
+        <class>rc.demo.app.models.User</class>
+        <class>rc.demo.app.models.Product</class>
+        <class>rc.demo.app.models.Order</class>
+        <class>rc.demo.app.models.OrderProductJoin</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />

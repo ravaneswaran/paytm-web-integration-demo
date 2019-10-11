@@ -1,7 +1,7 @@
 package rc.demo.razorpay.dao;
 
 import junit.framework.TestCase;
-import rc.demo.razorpay.models.PaymentTransaction;
+import rc.demo.app.models.PaymentTransaction;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
