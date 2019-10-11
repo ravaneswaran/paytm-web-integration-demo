@@ -1,7 +1,7 @@
 
-<%@page import="com.demo.razorpay.service.gateway.OrderGatewayService"%>
-<%@page import="com.demo.razorpay.models.OrderTransaction"%>
-<%@page import="com.demo.razorpay.properties.RazorPayProperties"%>
+<%@page import="rc.demo.razorpay.service.gateway.OrderGatewayService"%>
+<%@page import="rc.demo.razorpay.models.OrderTransaction"%>
+<%@page import="rc.demo.razorpay.properties.RazorPayProperties"%>
 <html>
     <head>
         <title>Manual Checkout Demo</title>

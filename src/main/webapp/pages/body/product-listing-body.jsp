@@ -1,10 +1,10 @@
-<%@page import="com.demo.razorpay.models.User"%>
+<%@page import="rc.demo.razorpay.models.User"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.demo.razorpay.models.session.Cart"%>
-<%@page import="com.demo.razorpay.SessionAttributes"%>
-<%@page import="com.demo.razorpay.models.Product"%>
+<%@page import="rc.demo.razorpay.models.session.Cart"%>
+<%@page import="rc.demo.razorpay.SessionAttributes"%>
+<%@page import="rc.demo.razorpay.models.Product"%>
 <%@page import="java.util.List"%>
-<%@page import="com.demo.razorpay.service.local.ProductLocalService"%>
+<%@page import="rc.demo.razorpay.service.local.ProductLocalService"%>
 
 
 <%

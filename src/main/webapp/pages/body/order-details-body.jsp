@@ -1,14 +1,14 @@
-<%@page import="com.demo.razorpay.models.User"%>
-<%@page import="com.demo.razorpay.service.gateway.OrderGatewayService"%>
-<%@page import="com.demo.razorpay.models.OrderTransaction"%>
-<%@page import="com.demo.razorpay.properties.RazorPayProperties"%>
-<%@page import="com.demo.razorpay.util.NumberFormatterUtil"%>
-<%@page import="com.demo.razorpay.models.Product"%>
-<%@page import="com.demo.razorpay.service.local.OrderProductJoinLocalService"%>
-<%@page import="com.demo.razorpay.models.OrderProductJoin"%>
+<%@page import="rc.demo.razorpay.models.User"%>
+<%@page import="rc.demo.razorpay.service.gateway.OrderGatewayService"%>
+<%@page import="rc.demo.razorpay.models.OrderTransaction"%>
+<%@page import="rc.demo.razorpay.properties.RazorPayProperties"%>
+<%@page import="rc.demo.razorpay.util.NumberFormatterUtil"%>
+<%@page import="rc.demo.razorpay.models.Product"%>
+<%@page import="rc.demo.razorpay.service.local.OrderProductJoinLocalService"%>
+<%@page import="rc.demo.razorpay.models.OrderProductJoin"%>
 <%@page import="java.util.List"%>
-<%@page import="com.demo.razorpay.SessionAttributes"%>
-<%@page import="com.demo.razorpay.models.Order"%>
+<%@page import="rc.demo.razorpay.SessionAttributes"%>
+<%@page import="rc.demo.razorpay.models.Order"%>
 
 
 <%

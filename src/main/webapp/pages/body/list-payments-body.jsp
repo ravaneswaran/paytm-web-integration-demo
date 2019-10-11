@@ -1,7 +1,7 @@
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="com.demo.razorpay.service.local.PaymentTransactionLocalService"%>
-<%@page import="com.demo.razorpay.models.PaymentTransaction"%>
+<%@page import="rc.demo.razorpay.service.local.PaymentTransactionLocalService"%>
+<%@page import="rc.demo.razorpay.models.PaymentTransaction"%>
 <%@page import="java.util.List"%>
 
 <%

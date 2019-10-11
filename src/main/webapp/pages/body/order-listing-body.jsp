@@ -1,13 +1,13 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.demo.razorpay.service.local.ProductLocalService"%>
-<%@page import="com.demo.razorpay.models.Product"%>
-<%@page import="com.demo.razorpay.models.OrderProductJoin"%>
-<%@page import="com.demo.razorpay.service.local.OrderProductJoinLocalService"%>
-<%@page import="com.demo.razorpay.service.local.OrderLocalService"%>
-<%@page import="com.demo.razorpay.models.Order"%>
+<%@page import="rc.demo.razorpay.service.local.ProductLocalService"%>
+<%@page import="rc.demo.razorpay.models.Product"%>
+<%@page import="rc.demo.razorpay.models.OrderProductJoin"%>
+<%@page import="rc.demo.razorpay.service.local.OrderProductJoinLocalService"%>
+<%@page import="rc.demo.razorpay.service.local.OrderLocalService"%>
+<%@page import="rc.demo.razorpay.models.Order"%>
 <%@page import="java.util.List"%>
-<%@page import="com.demo.razorpay.SessionAttributes"%>
-<%@page import="com.demo.razorpay.models.User"%>
+<%@page import="rc.demo.razorpay.SessionAttributes"%>
+<%@page import="rc.demo.razorpay.models.User"%>
 
 <%
 	User sessionUser = (User)session.getAttribute(SessionAttributes.SESSION_USER);
