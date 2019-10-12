@@ -45,7 +45,7 @@ public class CartControllerHelper extends RazorPayController {
                 sessionCart.addProductId(productId);
                 httpSession.setAttribute(SessionAttributes.SESSION_CART, sessionCart);
             }
-            System.out.println("sessionCart ================>>>>>>>>> " + sessionCart.getProductIds());
+            LOGGER.log(Level.INFO, String.format("sessionCart ================>>>>>>>>> %s", sessionCart.getProductIds()));
         }
     }
 
@@ -57,7 +57,7 @@ public class CartControllerHelper extends RazorPayController {
                 String productId = request.getParameter(RequestParameter.PRODUCT_ID);
                 sessionCart.removeProductId(productId);
             }
-            System.out.println("sessionCart ================>>>>>>>>> " + sessionCart.getProductIds());
+            LOGGER.log(Level.INFO, String.format("sessionCart ================>>>>>>>>> %s", sessionCart.getProductIds()));
         }
     }
 
@@ -67,7 +67,7 @@ public class CartControllerHelper extends RazorPayController {
             User sessionUser = (User) httpSession.getAttribute(SessionAttributes.SESSION_USER);
             Cart sessionCart = (Cart) httpSession.getAttribute(SessionAttributes.SESSION_CART);
 
-            System.out.println("sessionCart ------------------>>>>>>> " + sessionCart);
+            LOGGER.log(Level.INFO, String.format("sessionCart ------------------>>>>>>> %s", sessionCart));
 
             if (null != sessionCart) {
                 List<String> productIds = sessionCart.getProductIds();
