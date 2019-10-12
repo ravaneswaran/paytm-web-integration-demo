@@ -6,7 +6,7 @@
 %>
 
 <div class="caption">
-	<%= ApplicationProperties.getValue("app.title") %> Demo : HTTP Status 500
+	<%= ApplicationProperties.getValue("app.title") %> : HTTP Status 500
 </div>
 <div class="user-strip">
 	<%

@@ -1,7 +1,7 @@
 <%@page import="rc.demo.app.properties.ApplicationProperties"%>
 
 <div class="caption">
-	<%= ApplicationProperties.getValue("app.title") %> Demo : Forgot Password
+	<%= ApplicationProperties.getValue("app.title") %> : Forgot Password
 </div>
 <div class="user-strip">
 	<div class="non-user-block">

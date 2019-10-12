@@ -1,7 +1,7 @@
 <%@page import="rc.demo.app.properties.ApplicationProperties"%>
 
 <div class="caption">
-	<%= ApplicationProperties.getValue("app.title") %> Demo : User Registration
+	<%= ApplicationProperties.getValue("app.title") %> : User Registration
 </div>
 <div class="user-strip">
 	<div class="non-user-block">

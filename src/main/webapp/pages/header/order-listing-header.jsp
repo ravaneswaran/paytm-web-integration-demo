@@ -7,7 +7,7 @@
 %>
 
 <div class="caption">
-	<%= ApplicationProperties.getValue("app.title") %> Demo : Order Listing
+	<%= ApplicationProperties.getValue("app.title") %> : Order Listing
 </div>
 <div class="user-strip">
 	<%
