@@ -38,7 +38,7 @@
 					<a href="../pages/product-listing.jsp">Product Listing</a>
 					<a href="#">Order Listing</a>
 					<div class="separator"></div>
-					<a href="#">Change Password</a>
+					<a href="../pages/change-password.jsp">Change Password</a>
 					<div class="separator"></div>
 					<a href="../user/logout">Logout</a>
 				</div>

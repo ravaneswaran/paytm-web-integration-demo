@@ -57,4 +57,8 @@ public class UserLocalService {
     public static boolean hasUsers() {
         return !fetchAllUsers().isEmpty();
     }
+
+	public static void updateUser(User user) {
+		USER_DAO.update(user);
+	}
 }

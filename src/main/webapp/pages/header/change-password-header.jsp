@@ -7,7 +7,7 @@
 %>
 
 <div class="caption">
-	<%= ApplicationProperties.getValue("app.title") %> : Order Details
+	<%= ApplicationProperties.getValue("app.title") %> : Change Password
 </div>
 <div class="user-strip">
 	<%
@@ -43,4 +43,3 @@
 		}
 	}
 </script>
-
