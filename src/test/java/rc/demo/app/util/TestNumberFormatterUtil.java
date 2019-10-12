@@ -1,4 +1,4 @@
-package rc.demo.razorpay.util;
+package rc.demo.app.util;
 
 import junit.framework.TestCase;
 import rc.demo.app.util.NumberFormatterUtil;

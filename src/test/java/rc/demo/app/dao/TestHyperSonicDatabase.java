@@ -1,4 +1,4 @@
-package rc.demo.razorpay.dao;
+package rc.demo.app.dao;
 
 import junit.framework.TestCase;
 

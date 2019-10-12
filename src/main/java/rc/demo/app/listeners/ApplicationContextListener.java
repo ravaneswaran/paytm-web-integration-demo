@@ -50,15 +50,15 @@ public class ApplicationContextListener implements ServletContextListener {
 			if (!hasProducts) {
 				LOGGER.info("<<<<------- Registering Product(s) started... ------->>>>");
 
-				ProductUtil.deRegisterUserById("1");
-				ProductUtil.deRegisterUserById("2");
-				ProductUtil.deRegisterUserById("3");
-				ProductUtil.deRegisterUserById("4");
-				ProductUtil.deRegisterUserById("5");
-				ProductUtil.deRegisterUserById("6");
-				ProductUtil.deRegisterUserById("7");
-				ProductUtil.deRegisterUserById("8");
-				ProductUtil.deRegisterUserById("9");
+				ProductUtil.deRegisterProductById("1");
+				ProductUtil.deRegisterProductById("2");
+				ProductUtil.deRegisterProductById("3");
+				ProductUtil.deRegisterProductById("4");
+				ProductUtil.deRegisterProductById("5");
+				ProductUtil.deRegisterProductById("6");
+				ProductUtil.deRegisterProductById("7");
+				ProductUtil.deRegisterProductById("8");
+				ProductUtil.deRegisterProductById("9");
 
 				ProductUtil.registerProduct("1", 1, "Xiaomi Mi A3", 1299900, "12999.00", "Octa core",
 						"6.01\" (720 X 1560)", "64 GB", "48 + 8 + 2 | 32 MP", "4030 mAh", "4 GB",

@@ -1,4 +1,4 @@
-package rc.demo.razorpay.properties;
+package rc.demo.app.properties;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;

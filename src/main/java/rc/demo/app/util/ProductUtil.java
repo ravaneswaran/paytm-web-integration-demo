@@ -29,7 +29,7 @@ public class ProductUtil {
         ProductLocalService.registerProduct(product);
     }
 
-    public static final void deRegisterUserById(String id){
+    public static final void deRegisterProductById(String id){
         try {
             ProductLocalService.deRegisterProductUsingId(id);
         } catch(IllegalArgumentException iae){
