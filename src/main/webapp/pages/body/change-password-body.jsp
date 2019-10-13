@@ -1,9 +1,7 @@
 <div class="change-password-panel">
 	<div class="change-password-content">
 		<div class="change-password-content-heading">Change Password</div>
-		
-		
-		               	
+		  	
         <form id="change-password-form" class="form" method="POST" action="../user/password?cmd=change-password">							
            <label>Your email-id Please...</label>
            <input type="text" name="email" id="email" class="mandatory">
@@ -34,15 +32,14 @@
     }).done(function(data) {
            // log data to the console so we can see
            console.log(data);
-           /* if('-1' == data){
-        	   $("#change-password-response").html("Sorry!!! you are yet to register...");
+           if("0" == data){
+        	   alert("Password updated successfully, please relogin again.");
+        	   window.location = "../user/logout";
            } else {
-        	   $("#change-password-response").html("Your password is : " + data);
-           } */
-           $("#error-message").html("");
-           $("#error-message").html(data);
-           $("#error-message-box").css('display', 'block');
-           // here we will handle errors and validation messages
+        	   $("#error-message").html("");
+               $("#error-message").html(data);
+               $("#error-message-box").css('display', 'block');
+           }
        });
    event.preventDefault();
    });

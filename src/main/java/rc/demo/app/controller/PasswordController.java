@@ -101,7 +101,9 @@ public class PasswordController extends PasswordControllerHelper {
         		user.setPassword(newPassword);
         		
         		UserLocalService.updateUser(user);
-        		response.getWriter().print("Your password updated successfully.");
+        		response.getWriter().print("0");
+        	} else {
+        		response.getWriter().print("Please provide your current password.");
         	}
         	
         } catch (IOException e) {
