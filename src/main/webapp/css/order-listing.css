@@ -11,7 +11,7 @@ body > div.wrapper > div.content-panel > div.order-panel {
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content {
 	width: 600px;
     margin-top: 50px;
-    margin-left: 124px;
+    margin-left: 115px;
     float: left;
     padding: 10px 55px 40px;
     background-color: rgba(238, 243, 237, 0.6);
@@ -19,7 +19,7 @@ body > div.wrapper > div.content-panel > div.order-panel > div.order-content {
     box-shadow: 0 0 10px;
     border-radius: 10px;
     font-size: 13px;
-    height: 400px;
+    height: 420px;
 }
 
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-heading {
