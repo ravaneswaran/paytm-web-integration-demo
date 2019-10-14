@@ -61,6 +61,7 @@ public class PasswordController extends PasswordControllerHelper {
         String email = request.getParameter(RequestParameter.EMAIL);
         String currentPassword = request.getParameter(RequestParameter.CURRENT_PASSWORD);
         String newPassword = request.getParameter(RequestParameter.NEW_PASSWORD);
+        String confirmPassword = request.getParameter(RequestParameter.CONFIRM_PASSWORD);
         String password = getUserPassword(email);
         
         try {
@@ -80,6 +81,11 @@ public class PasswordController extends PasswordControllerHelper {
             	return;
             }
         	
+        	if(confirmPassword == null || confirmPassword.isEmpty()) {
+            	response.getWriter().println("Confirm password cannot be blank.");
+            	return;
+            }
+        	
         	if(password == null || password.isEmpty()) {
             	response.getWriter().println("Please check your email address");
             	return;
@@ -87,6 +93,11 @@ public class PasswordController extends PasswordControllerHelper {
         	
         	if(currentPassword.equals(newPassword)) {
         		response.getWriter().println("Current and New password cannot be same.");
+            	return;
+        	}
+        	
+        	if(!confirmPassword.equals(newPassword)) {
+        		response.getWriter().println("New and Confirm password must be same.");
             	return;
         	}
         	

@@ -9,6 +9,8 @@
            <input type="password" name="current-password" id="current-password" class="mandatory">
            <label>New Password</label>
            <input type="password" name="new-password" id="new-password" class="mandatory">
+           <label>Confirm New Password</label>
+           <input type="password" name="confirm-password" id="confirm-password" class="mandatory">
            <button type="submit" name="change-password" id="change-password">Change My Password</button>
         </form>
         

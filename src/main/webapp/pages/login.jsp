@@ -4,7 +4,7 @@
 
 <html>
    <head>
-      <title><%= ApplicationProperties.getValue("app.title") %> Demo Login</title>
+      <title>Login</title>
       <jsp:include page="../pages/css/main-css.jsp"/>
       <jsp:include page="../pages/css/login/login-css.jsp"/>
       <jsp:include page="../pages/javascript/main-javascript.jsp"/>
