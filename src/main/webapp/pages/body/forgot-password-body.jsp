@@ -19,19 +19,13 @@
         data        : formData, // our data object
         dataType    : 'text', // what type of data do we expect back from the server
         encode      : true
-    }).done(function(data) {
-           // log data to the console so we can see
-           console.log(data);
-           /* if('-1' == data){
-        	   $("#forgot-password-response").html("Sorry!!! you are yet to register...");
-           } else {
-        	   $("#forgot-password-response").html("Your password is : " + data);
-           } */
-           $("#forgot-password-response").html("");
-           $("#forgot-password-response").html(data);
-           $("#forgot-password-response").css('display', 'block');
-           // here we will handle errors and validation messages
-       });
-   event.preventDefault();
+	   }).done(function(data) {
+	       // log data to the console so we can see
+	       console.log(data);
+	       $("#forgot-password-response").html("");
+	       $("#forgot-password-response").html(data);
+	       $("#forgot-password-response").css('display', 'block');
+	   });
+	   event.preventDefault();
    });
 </script>
