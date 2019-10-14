@@ -26,10 +26,10 @@
 					for(Order previousOrder : previousOrders){
 						
 			%>
-						<div class="order-content-body-accordion" onclick="toggleAccordionInfoOrDeleteOrder('<%= previousOrder.getId() %>', 'true')">
-							Order : <%= previousOrder.getId() %>
+						<div class="order-content-body-accordion">
+							<a class="underline" onclick="toggleAccordionInfo('<%= previousOrder.getId() %>')">Order : <%= previousOrder.getId() %></a>
 							<a href="../order/details?cmd=details&order-id=<%=previousOrder.getId()%>"><img class="icon" src="../images/payment-icon.png"/></a>
-							<img class="icon" src="../images/delete-icon.png" onclick="return toggleAccordionInfoOrDeleteOrder('<%= previousOrder.getId()%>', 'false')"/>
+							<img class="icon" src="../images/delete-icon.png" onclick="deleteOrder('<%= previousOrder.getId()%>')"/>
 							<span><%= previousOrder.getStatus() %></span>
 						</div> 
 						<div class="order-content-body-accordion-info" id="<%= previousOrder.getId() %>">
@@ -90,21 +90,17 @@
 
 <script>
 
-	function toggleAccordionInfoOrDeleteOrder(orderId, toggle){
-		
-		//alert(toggle);
-		
-		if("true" == toggle){
-			var elementId = "#"+orderId;
-			var displayStyle = $(elementId).css("display");
-			if("none" == displayStyle){
-				$(elementId).css("display", "block");
-			} else {
-				$(elementId).css("display", "none");
-			}
-			return;
+	function toggleAccordionInfo(orderId){
+		var elementId = "#"+orderId;
+		var displayStyle = $(elementId).css("display");
+		if("none" == displayStyle){
+			$(elementId).css("display", "block");
+		} else {
+			$(elementId).css("display", "none");
 		}
-		
+	}
+	
+	function deleteOrder(orderId){
 		$.confirm({
 		    title: 'Delete Confirmation!',
 		    content: 'Are you sure want to delete this item ( '+orderId+' ) ?',
@@ -126,8 +122,4 @@
 		    }
 		});
 	}
-
-	function toggleAccordionInfo(id){
-		
-  	}
 </script>

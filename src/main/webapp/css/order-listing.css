@@ -63,8 +63,12 @@ body > div.wrapper > div.content-panel > div.order-panel > div.order-content > d
 	text-decoration: none;
 }
 
+body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-body > div.order-content-body-accordion a.underline{
+	text-decoration: underline;
+}
+
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-body > div.order-content-body-accordion a:hover{
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-body > div.order-content-body-accordion > img.icon{
