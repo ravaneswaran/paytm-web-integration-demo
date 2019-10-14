@@ -10,7 +10,7 @@ body > div.wrapper > div.content-panel > div.order-panel {
 
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content {
 	width: 600px;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-left: 124px;
     float: left;
     padding: 10px 55px 40px;
@@ -19,7 +19,7 @@ body > div.wrapper > div.content-panel > div.order-panel > div.order-content {
     box-shadow: 0 0 10px;
     border-radius: 10px;
     font-size: 13px;
-    height: 475px;
+    height: 400px;
 }
 
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-heading {
