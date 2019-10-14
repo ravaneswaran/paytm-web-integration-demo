@@ -39,7 +39,7 @@ body > div.wrapper > div.content-panel > div.order-panel > div.order-content > d
 
 body > div.wrapper > div.content-panel > div.order-panel > div.order-content > div.order-content-body {
 	border: 0px solid red;
-    height: 490px;
+    height: 430px;
     margin-top: 10px;
     overflow-y: auto;
 }
