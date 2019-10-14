@@ -5,10 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.NotImplementedException;
 
-import rc.demo.app.controller.RazorPayController;
+import rc.demo.app.controller.PaytmController;
 import rc.demo.app.service.local.UserLocalService;
 
-public class RegistrationControllerHelper extends RazorPayController {
+public class RegistrationControllerHelper extends PaytmController {
 
 	private static final long serialVersionUID = 1L;
 

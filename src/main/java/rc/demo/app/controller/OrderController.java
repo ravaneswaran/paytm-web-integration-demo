@@ -9,15 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.razorpay.RazorpayException;
-
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.models.Order;
 import rc.demo.app.models.OrderTransaction;
 import rc.demo.app.models.User;
-import rc.demo.app.service.gateway.OrderGatewayService;
+import rc.demo.app.service.gateway.PaytmOrderGatewayService;
 import rc.demo.app.service.local.OrderLocalService;
 
 public class OrderController extends OrderControllerHelper {
@@ -40,53 +38,31 @@ public class OrderController extends OrderControllerHelper {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response) {
 		String command = request.getParameter(RequestParameter.COMMAND);
-		try {
-			switch (command) {
-			case NEW:
-				newOrder(request, response);
-				break;
-			case LISTING:
-				listOrders(request, response);
-				break;
-			case DELETE:
-				deleteOrder(request, response);
-				break;
-			case DETAILS:
-				orderDetails(request, response);
-
-			case SYNC:
-				syncOrderTransactionsWithGateway(request, response);
-				break;
-			case CANCEL:
-				cancelOrderTransaction(request, response);
-				break;
-			case CONFIRM:
-				confirmOrderTransaction(request, response);
-				break;
-			}
-		} catch (RazorpayException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
+		switch (command) {
+		case NEW:
+			newOrder(request, response);
+			break;
+		case LISTING:
+			listOrders(request, response);
+			break;
+		case DELETE:
+			deleteOrder(request, response);
+			break;
+		case DETAILS:
+			orderDetails(request, response);
+			break;
 		}
 	}
 
 	protected void newOrder(HttpServletRequest request, HttpServletResponse response) {
 		String orderId = request.getParameter("order-id");
-		OrderTransaction orderTransaction = null;
-		try {
-			orderTransaction = OrderGatewayService.fetchOrderTransaction(orderId);
-		} catch (RazorpayException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
-		}
+		OrderTransaction orderTransaction = PaytmOrderGatewayService.fetchOrderTransaction(orderId);
 		if (null != orderTransaction) {
 
 		}
 	}
 
-	protected void listOrders(HttpServletRequest request, HttpServletResponse response) throws RazorpayException {
+	protected void listOrders(HttpServletRequest request, HttpServletResponse response) {
 		String userId = request.getParameter(RequestParameter.USER_ID);
 		Order currentOrder = new Order();
 
@@ -105,7 +81,7 @@ public class OrderController extends OrderControllerHelper {
 		}
 	}
 
-	protected void deleteOrder(HttpServletRequest request, HttpServletResponse response) throws RazorpayException {
+	protected void deleteOrder(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession httpSession = request.getSession(false);
 		if (null != httpSession) {
 			User sessionUser = (User) httpSession.getAttribute(SessionAttributes.SESSION_USER);
@@ -149,7 +125,7 @@ public class OrderController extends OrderControllerHelper {
 		}
 	}
 
-	protected void orderDetails(HttpServletRequest request, HttpServletResponse response) throws RazorpayException {
+	protected void orderDetails(HttpServletRequest request, HttpServletResponse response){
 
 		HttpSession httpSession = request.getSession(false);
 
@@ -174,66 +150,6 @@ public class OrderController extends OrderControllerHelper {
 				toErrorPage500(request, response);
 				return;
 			}
-		}
-	}
-
-	/***************************
-	 * Lower portion needs to be deleted in case if we do not want it
-	 **********************************/
-
-	protected void syncOrderTransactionsWithGateway(HttpServletRequest request, HttpServletResponse response)
-			throws RazorpayException {
-		syncOrderTransactionsWithGateway();
-		try {
-			response.sendRedirect("../pages/list-payments.jsp");
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
-		}
-	}
-
-	protected void cancelOrderTransaction(HttpServletRequest request, HttpServletResponse response)
-			throws RazorpayException {
-		String orderTransactionId = request.getParameter(RequestParameter.ORDER_TRANSACTION_ID);
-		String orderTransactionDetails = cancelOrderTransaction(orderTransactionId);
-
-		response.setContentType("text/html");
-		try {
-			response.getWriter().print(orderTransactionDetails);
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
-		}
-	}
-
-	protected void cancelOrder(HttpServletRequest request, HttpServletResponse response) throws RazorpayException {
-		String orderTransactionId = request.getParameter(RequestParameter.ORDER_TRANSACTION_ID);
-		cancelOrder(orderTransactionId);
-
-		response.setContentType("text/html");
-		try {
-			response.getWriter().print("Order cancelled successfully...");
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
-		}
-	}
-
-	protected void confirmOrderTransaction(HttpServletRequest request, HttpServletResponse response)
-			throws RazorpayException {
-		String orderTransactionId = request.getParameter(RequestParameter.ORDER_TRANSACTION_ID);
-		String orderTransactionDetails = confirmOrderTransaction(orderTransactionId);
-
-		response.setContentType("text/html");
-		try {
-			response.getWriter().print(orderTransactionDetails);
-		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage(), e);
-			toErrorPage500(request, response);
-			return;
 		}
 	}
 }

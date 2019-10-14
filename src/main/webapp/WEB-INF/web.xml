@@ -51,11 +51,6 @@
         <servlet-class>rc.demo.app.controller.OrderController</servlet-class>
     </servlet>
 
-    <servlet>
-        <servlet-name>PaymentController</servlet-name>
-        <servlet-class>rc.demo.app.controller.PaymentController</servlet-class>
-    </servlet>
-
     <servlet-mapping>
         <servlet-name>RegistrationController</servlet-name>
         <url-pattern>/user/registration/*</url-pattern>
@@ -89,11 +84,6 @@
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/order/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet-mapping>
-        <servlet-name>PaymentController</servlet-name>
-        <url-pattern>/payment/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>

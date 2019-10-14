@@ -2,7 +2,7 @@ package rc.demo.app.controller.helper;
 
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
-import rc.demo.app.controller.RazorPayController;
+import rc.demo.app.controller.PaytmController;
 import rc.demo.app.models.Order;
 import rc.demo.app.models.OrderProductJoin;
 import rc.demo.app.models.Product;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CartControllerHelper extends RazorPayController {
+public class CartControllerHelper extends PaytmController {
 
 	private static final long serialVersionUID = 1L;
 	

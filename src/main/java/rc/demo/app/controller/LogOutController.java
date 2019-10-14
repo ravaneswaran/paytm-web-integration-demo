@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class LogOutController extends RazorPayController{
+public class LogOutController extends PaytmController{
 	
 	private static final long serialVersionUID = 1L;
 

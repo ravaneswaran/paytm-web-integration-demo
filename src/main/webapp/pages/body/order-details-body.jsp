@@ -1,5 +1,5 @@
 <%@page import="rc.demo.app.models.User"%>
-<%@page import="rc.demo.app.service.gateway.OrderGatewayService"%>
+<%@page import="rc.demo.app.service.gateway.PaytmOrderGatewayService"%>
 <%@page import="rc.demo.app.models.OrderTransaction"%>
 <%@page import="rc.demo.app.properties.ApplicationProperties"%>
 <%@page import="rc.demo.app.util.NumberFormatterUtil"%>
@@ -23,17 +23,17 @@
 		<div class="order-details-content-body-left-panel">
 			<%
 				long totalPrice = 0l;
-					long gst = 0l;
-					if(null != sessionOrder){
+						long gst = 0l;
+						if(null != sessionOrder){
 			%>
 					<div class="order-details-content-body-left-panel-header">Order : <%=sessionOrder.getId()%></div>
 			<%
 				List<OrderProductJoin> orderProductJoins = OrderProductJoinLocalService.listOrderProductJoinsByOrderId(sessionOrder.getId());
-						if(null != orderProductJoins && !orderProductJoins.isEmpty()){
-							for(OrderProductJoin orderProductJoin : orderProductJoins){
-								Product product = orderProductJoin.getProduct();
-								totalPrice += product.getPrice();
-								gst += (product.getPrice() * 5) / 100;
+							if(null != orderProductJoins && !orderProductJoins.isEmpty()){
+								for(OrderProductJoin orderProductJoin : orderProductJoins){
+									Product product = orderProductJoin.getProduct();
+									totalPrice += product.getPrice();
+									gst += (product.getPrice() * 5) / 100;
 			%>
 							<table class="order-details-content-body-left-panel-outer-table">
 								<tbody>
@@ -70,13 +70,13 @@
 							</table>
 			<%
 				}
+							}
 						}
-					}
 			%>
 		</div>
 		<%
-			String key = ApplicationProperties.getKeyId();
-			    	OrderTransaction orderTransaction =  OrderGatewayService.createNewOrderTransaction(totalPrice + (2 * gst), "INR", 1, 1);
+			String key = ApplicationProperties.getMerchantId();
+			OrderTransaction orderTransaction =  PaytmOrderGatewayService.createNewOrder(totalPrice + (2 * gst), "INR", 1, 1);
 		%>
 		<div class="order-details-content-body-right-panel">
 			<form action="/order/transaction?cmd=new&checkout-type=auto" method="POST" class="order-details-content-body-right-panel-form-upper">
@@ -95,10 +95,6 @@
                     data-theme.color="#b7f5a4">
                 </script>
                 <input type="hidden" name="order-id" value="<%= orderTransaction.getId() %>"/>
-				<!-- <div class="order-details-content-body-right-panel-button">
-					<img src="../images/razorpay-icon.png" />
-					<input type="button" value="Pay with Razorpay"/>
-				</div> -->
 			</form>
 			<table>
 				<tbody>
@@ -141,10 +137,6 @@
                     data-theme.color="#b7f5a4">
                 </script>
                 <input type="hidden" name="order-id" value="<%= orderTransaction.getId() %>"/>
-				<!-- <div class="order-details-content-body-right-panel-button">
-					<img src="../images/razorpay-icon.png" />
-					<input type="button" value="Pay with Razorpay"/>
-				</div> -->
 			</form>
 		</div>
 	</div>

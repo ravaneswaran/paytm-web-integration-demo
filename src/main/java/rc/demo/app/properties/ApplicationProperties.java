@@ -9,13 +9,13 @@ public class ApplicationProperties {
 
     private static final Logger LOGGER = Logger.getLogger(ApplicationProperties.class.getName());
 
-    private static Properties razorPayProperties;
+    private static Properties paytmProperties;
 
     static {
-        razorPayProperties = System.getProperties();
+        paytmProperties = System.getProperties();
         //loading the main property file
         try {
-            razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app.properties"));
+            paytmProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app.properties"));
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
@@ -23,23 +23,23 @@ public class ApplicationProperties {
         //loading the environment specific property files
 
         //loading development environment specific property file
-        String operationMode = razorPayProperties.getProperty("operation.mode");
+        String operationMode = paytmProperties.getProperty("operation.mode");
 
         if ("development".equals(operationMode)) {
             try {
-                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-dev.properties"));
+                paytmProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-dev.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
         } else if ("testing".equals(operationMode)) {
             try {
-                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-test.properties"));
+                paytmProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-test.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
         } else {
             try {
-                razorPayProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-prod.properties"));
+                paytmProperties.load(ApplicationProperties.class.getClassLoader().getResourceAsStream("app-prod.properties"));
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, e.getMessage(), e);
             }
@@ -49,19 +49,19 @@ public class ApplicationProperties {
     public ApplicationProperties() {
     }
 
-    public static final String getKeyId() {
-        return razorPayProperties.getProperty("razorpay.key.id");
+    public static final String getMerchantId() {
+        return paytmProperties.getProperty("merchant.id");
     }
 
-    public static final String getKeySecret() {
-        return razorPayProperties.getProperty("razorpay.key.secret");
+    public static final String getMerchantKey() {
+        return paytmProperties.getProperty("merchant.key");
     }
 
     public static String getOperationMode() {
-        return razorPayProperties.getProperty("operation.mode");
+        return paytmProperties.getProperty("operation.mode");
     }
 
     public static String getValue(String key) {
-        return razorPayProperties.getProperty(key);
+        return paytmProperties.getProperty(key);
     }
 }

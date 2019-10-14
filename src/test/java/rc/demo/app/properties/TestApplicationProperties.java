@@ -13,13 +13,13 @@ public class TestApplicationProperties extends TestCase {
     }
 
     public void testRazorpayKeyId() {
-        String keyId = ApplicationProperties.getKeyId();
+        String keyId = ApplicationProperties.getMerchantId();
         Assert.assertNotNull(keyId);
         Assert.assertEquals("rzp_test_ChzI4JHLWDsaWo", keyId);
     }
 
     public void testRazorpayKeySecret() {
-        String keySecret = ApplicationProperties.getKeySecret();
+        String keySecret = ApplicationProperties.getMerchantKey();
         Assert.assertNotNull(keySecret);
         Assert.assertEquals("9udTGs2Y2nhfJg3yicIWARFm", keySecret);
     }
