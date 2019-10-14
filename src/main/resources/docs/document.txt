@@ -1,0 +1,3 @@
+https://github.com/Paytm-Payments/Paytm_Sample_Checksum_Utilities/tree/master/Java/checksumKit
+
+mvn install:install-file -Dfile=/home/fiera-mm/Downloads/PaytmChecksum.jar -DgroupId=com.paytm.pg -DartifactId=pg-checksum -Dversion=1.0 -Dpackaging=jar

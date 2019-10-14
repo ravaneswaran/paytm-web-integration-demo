@@ -56,6 +56,14 @@ public class ApplicationProperties {
     public static final String getMerchantKey() {
         return paytmProperties.getProperty("merchant.key");
     }
+    
+    public static final String getCallbackURL() {
+    	return paytmProperties.getProperty("app.callback.url");
+    }
+    
+    public static final String getPaymentGatewayEndPointUrl() {
+    	return paytmProperties.getProperty("paytm.endpoint.url");
+    }
 
     public static String getOperationMode() {
         return paytmProperties.getProperty("operation.mode");

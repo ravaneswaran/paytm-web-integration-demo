@@ -22,6 +22,7 @@
 		<hsqldb.version>2.5.0</hsqldb.version>
 		<httpclient.version>4.1.1</httpclient.version>
 		<paytm-pg.version>0.0.1</paytm-pg.version>
+		<paytm-pg.checksum.version>1.0</paytm-pg.checksum.version>
 		<jaxb-api.version>2.1</jaxb-api.version>
 		<org.eclipse.persistence.moxy.version>2.5.2</org.eclipse.persistence.moxy.version>
 		<javax.persistence.version>2.2.1</javax.persistence.version>
@@ -68,6 +69,12 @@
 			<groupId>com.paytm.pg</groupId>
 			<artifactId>paytm-pg</artifactId>
 			<version>${paytm-pg.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.paytm.pg</groupId>
+			<artifactId>pg-checksum</artifactId>
+			<version>${paytm-pg.checksum.version}</version>
 		</dependency>
 
 		<dependency>
@@ -152,10 +159,17 @@
 	</build>
 
 	<repositories>
+
 		<repository>
 			<id>paytm-repository</id>
 			<url>http://artifactorypg.paytm.in/artifactory/libs-release</url>
 		</repository>
+
+		<repository>
+			<id>app-local-repo</id>
+			<url>file:///${project.basedir}/src/main/webapp/WEB-INF/lib</url>
+		</repository>
+
 	</repositories>
 
 </project>

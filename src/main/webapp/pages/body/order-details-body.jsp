@@ -76,7 +76,7 @@
 		</div>
 		<%
 			String key = ApplicationProperties.getMerchantId();
-			OrderTransaction orderTransaction =  PaytmOrderGatewayService.createNewOrder(totalPrice + (2 * gst), "INR", 1, 1);
+			OrderTransaction orderTransaction =  PaytmOrderGatewayService.createNewOrder(sessionUser.getId(), sessionOrder.getId(), totalPrice + (2 * gst), "INR", 1, 1);
 		%>
 		<div class="order-details-content-body-right-panel">
 			<form action="/order/transaction?cmd=new&checkout-type=auto" method="POST" class="order-details-content-body-right-panel-form-upper">
