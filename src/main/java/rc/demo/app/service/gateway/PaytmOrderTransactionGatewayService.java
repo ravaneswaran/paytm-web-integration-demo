@@ -8,8 +8,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.xml.bind.JAXBException;
-
 import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
@@ -17,24 +15,33 @@ import com.paytm.pg.merchant.CheckSumServiceHelper;
 import rc.demo.app.models.OrderTransaction;
 import rc.demo.app.properties.ApplicationProperties;
 
-public class PaytmOrderGatewayService {
-	
-	public static OrderTransaction createNewOrder(String userId, String orderId, long amount, String currency, int receiptNumber,
-			int paymentCapture) throws IOException, JAXBException {
-		
+public class PaytmOrderTransactionGatewayService {
+
+	public static OrderTransaction createNewOrderTransaction(String userId, String orderId, long amount, String currency,
+			int receiptNumber, int paymentCapture) throws IOException {
+
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
 		/* body parameters */
 		JSONObject body = new JSONObject();
 
-		/* for custom checkout value is 'Payment' and for intelligent router is 'UNI_PAY' */
+		/*
+		 * for custom checkout value is 'Payment' and for intelligent router is
+		 * 'UNI_PAY'
+		 */
 		body.put("requestType", "Payment");
 
-		/* Find your MID in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+		/*
+		 * Find your MID in your Paytm Dashboard at
+		 * https://dashboard.paytm.com/next/apikeys
+		 */
 		body.put("mid", ApplicationProperties.getMerchantId());
 
-		/* Find your Website Name in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys */
+		/*
+		 * Find your Website Name in your Paytm Dashboard at
+		 * https://dashboard.paytm.com/next/apikeys
+		 */
 		body.put("websiteName", "localhost");
 
 		/* Enter your unique order id */
@@ -65,13 +72,14 @@ public class PaytmOrderGatewayService {
 		body.put("userInfo", userInfo);
 
 		/**
-		* Generate checksum by parameters we have in body
-		* You can get Checksum JAR from https://developer.paytm.com/docs/checksum/
-		* Find your Merchant Key in your Paytm Dashboard at https://dashboard.paytm.com/next/apikeys 
-		*/
+		 * Generate checksum by parameters we have in body You can get Checksum JAR from
+		 * https://developer.paytm.com/docs/checksum/ Find your Merchant Key in your
+		 * Paytm Dashboard at https://dashboard.paytm.com/next/apikeys
+		 */
 		String checksum = "";
 		try {
-			checksum = CheckSumServiceHelper.getCheckSumServiceHelper().genrateCheckSum(ApplicationProperties.getMerchantKey(), body.toString());
+			checksum = CheckSumServiceHelper.getCheckSumServiceHelper()
+					.genrateCheckSum(ApplicationProperties.getMerchantKey(), body.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,37 +97,37 @@ public class PaytmOrderGatewayService {
 		String post_data = paytmParams.toString();
 
 		/* for Staging */
-		URL url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(), ApplicationProperties.getMerchantId(), orderId));
+		URL url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(),
+				ApplicationProperties.getMerchantId(), orderId));
 
 		/* for Production */
-		// URL url = new URL("https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=YOUR_ORDER_ID");
+		// URL url = new
+		// URL("https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=YOUR_ORDER_ID");
 
 		try {
-		    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		    connection.setRequestMethod("POST");
-		    connection.setRequestProperty("Content-Type", "application/json");
-		    connection.setDoOutput(true);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setDoOutput(true);
 
-		    DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
-		    requestWriter.writeBytes(post_data);
-		    requestWriter.close();
-		    String responseData = "";
-		    InputStream is = connection.getInputStream();
-		    BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
-		    if ((responseData = responseReader.readLine()) != null) {
-		        System.out.append("Response: " + responseData);
-		    }
-		    // System.out.append("Request: " + post_data);
-		    responseReader.close();
+			DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+			requestWriter.writeBytes(post_data);
+			requestWriter.close();
+			String responseData = "";
+			InputStream is = connection.getInputStream();
+			BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
+			if ((responseData = responseReader.readLine()) != null) {
+				System.out.append("Response: " + responseData);
+			}
+			// System.out.append("Request: " + post_data);
+			responseReader.close();
 		} catch (Exception exception) {
-		    exception.printStackTrace();
+			exception.printStackTrace();
 		}
-		
-		
-		
+
 		return null;
 	}
-	
+
 	public static OrderTransaction fetchOrderTransaction(String orderId) {
 		return null;
 	}

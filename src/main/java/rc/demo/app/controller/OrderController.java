@@ -15,7 +15,7 @@ import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.models.Order;
 import rc.demo.app.models.OrderTransaction;
 import rc.demo.app.models.User;
-import rc.demo.app.service.gateway.PaytmOrderGatewayService;
+import rc.demo.app.service.gateway.PaytmOrderTransactionGatewayService;
 import rc.demo.app.service.local.OrderLocalService;
 
 public class OrderController extends OrderControllerHelper {
@@ -56,7 +56,7 @@ public class OrderController extends OrderControllerHelper {
 
 	protected void newOrder(HttpServletRequest request, HttpServletResponse response) {
 		String orderId = request.getParameter("order-id");
-		OrderTransaction orderTransaction = PaytmOrderGatewayService.fetchOrderTransaction(orderId);
+		OrderTransaction orderTransaction = PaytmOrderTransactionGatewayService.fetchOrderTransaction(orderId);
 		if (null != orderTransaction) {
 
 		}
