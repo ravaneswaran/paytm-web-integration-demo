@@ -91,6 +91,16 @@ public class PasswordController extends PasswordControllerHelper {
             	return;
             }
         	
+        	if(5 > newPassword.length()) {
+        		response.getWriter().println("New password lenght should be 5 characters long");
+            	return;
+        	}
+        	
+        	if(5 > confirmPassword.length()) {
+        		response.getWriter().println("Confirm password lenght should be 5 characters long");
+            	return;
+        	}
+        	
         	if(currentPassword.equals(newPassword)) {
         		response.getWriter().println("Current and New password cannot be same.");
             	return;
