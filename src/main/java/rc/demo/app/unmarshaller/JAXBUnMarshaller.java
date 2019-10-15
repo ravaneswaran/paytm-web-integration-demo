@@ -16,8 +16,8 @@ public class JAXBUnMarshaller<T> {
 		
 		Unmarshaller jaxbUnMarshaller = jaxbContext.createUnmarshaller();
 		jaxbUnMarshaller.setProperty(UnmarshallerProperties.MEDIA_TYPE, "application/json");
-		jaxbUnMarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT, false);
+		jaxbUnMarshaller.setProperty(UnmarshallerProperties.JSON_INCLUDE_ROOT, true);
 
-		return (T) jaxbUnMarshaller.unmarshal(new StringReader(jsonString));
+		return (T)jaxbUnMarshaller.unmarshal(new StringReader(jsonString));
 	}
 }

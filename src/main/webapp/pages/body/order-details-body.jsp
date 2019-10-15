@@ -128,9 +128,7 @@
            if("0" == data){
         	   alert("------------------>>>>>>>>> "+data);
            } else {
-        	   $("#error-message").html("");
-               $("#error-message").html(data);
-               $("#error-message-box").css('display', 'block');
+        	   alert(data);
            }
        });
    event.preventDefault();
@@ -150,9 +148,7 @@
 	           if("0" == data){
 	        	   alert("------------------>>>>>>>>> "+data);
 	           } else {
-	        	   $("#error-message").html("");
-	               $("#error-message").html(data);
-	               $("#error-message-box").css('display', 'block');
+	        	   alert(data);
 	           }
 	       });
 	   event.preventDefault();

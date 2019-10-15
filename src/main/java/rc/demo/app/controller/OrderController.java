@@ -14,7 +14,7 @@ import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.models.Order;
 import rc.demo.app.models.OrderProductJoin;
-import rc.demo.app.models.OrderTransaction;
+import rc.demo.app.models.PaytmTransaction;
 import rc.demo.app.models.Product;
 import rc.demo.app.models.User;
 import rc.demo.app.service.gateway.PaytmPaymentGatewayService;
@@ -52,7 +52,6 @@ public class OrderController extends OrderControllerHelper {
 
 	protected void newOrder(HttpServletRequest request, HttpServletResponse response) {
 		String orderId = request.getParameter("order-id");
-		System.out.println("orderId ----------------->>>>>>>> "+orderId);
 		List<OrderProductJoin> orderProductJoins = OrderProductJoinLocalService.listOrderProductJoinsByOrderId(orderId);
 
 		long totalPrice = 0l;
@@ -72,26 +71,33 @@ public class OrderController extends OrderControllerHelper {
 		if (null != httpSession) {
 			User sessionUser = (User) httpSession.getAttribute(SessionAttributes.SESSION_USER);
 
-			OrderTransaction orderTransaction = null;
+			PaytmTransaction paytmTransaction = null;
 			try {
-				orderTransaction = PaytmPaymentGatewayService.initiateTransaction(sessionUser.getId(),
-						orderId, amount, "INR", 1, 1);
+				paytmTransaction = PaytmPaymentGatewayService.initiateTransaction(sessionUser.getId(),
+						orderId, amount, "INR");
 			} catch (IOException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				toErrorPage500(request, response);
 				return;
 			}
 
-			if (null != orderTransaction) {
-
-			}
-
-			try {
-				response.getWriter().print("0");
-			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
-				toErrorPage500(request, response);
-				return;
+			if (null != paytmTransaction) {
+				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
+				try {
+					response.getWriter().print("0");
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, e.getMessage(), e);
+					toErrorPage500(request, response);
+					return;
+				}
+			} else {
+				try {
+					response.getWriter().print("Unable to contact payment gateway !!!");
+				} catch (IOException e) {
+					LOGGER.log(Level.SEVERE, e.getMessage(), e);
+					toErrorPage500(request, response);
+					return;
+				}
 			}
 		} else {
 			try {

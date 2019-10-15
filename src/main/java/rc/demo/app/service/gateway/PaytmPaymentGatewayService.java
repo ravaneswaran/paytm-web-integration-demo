@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,18 +16,15 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.models.OrderTransaction;
 import rc.demo.app.models.PaytmTransaction;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
 public class PaytmPaymentGatewayService {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(PaytmPaymentGatewayService.class.getName());
 
-	public static OrderTransaction initiateTransaction(String userId, String orderId, long amount, String currency,
-			int receiptNumber, int paymentCapture) throws IOException {
-
+	public static PaytmTransaction initiateTransaction(String userId, String orderId, long amount, String currency) throws IOException {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -121,20 +120,27 @@ public class PaytmPaymentGatewayService {
 			InputStream is = connection.getInputStream();
 			BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
 			if ((responseData = responseReader.readLine()) != null) {
-				LOGGER.log(Level.INFO, responseData);
+				LOGGER.info(responseData);
 			}
 			responseReader.close();
-			System.out.println("responseData -------->>>>>> "+responseData);
-			
+
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-transaction", responseData);
+			LOGGER.info(paytmTransactionString);
+
 			JAXBUnMarshaller<PaytmTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			PaytmTransaction paytmTransaction = jaxbUnMarshaller.unMarshall(responseData, PaytmTransaction.class);
-			
-			System.out.println("paytmTransaction -------->>>>>> "+paytmTransaction);
-			
-			return null;
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmTransaction.class);
+
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
 		}
+	}
+
+	static {
+		Handler handlerObj = new ConsoleHandler();
+		handlerObj.setLevel(Level.ALL);
+		LOGGER.addHandler(handlerObj);
+		LOGGER.setLevel(Level.ALL);
+		LOGGER.setUseParentHandlers(false);
 	}
 }
