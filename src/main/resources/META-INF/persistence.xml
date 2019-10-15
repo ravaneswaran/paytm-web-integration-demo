@@ -4,9 +4,6 @@
 
     <persistence-unit name="razorpay" transaction-type="RESOURCE_LOCAL">
 
-        <class>rc.demo.app.models.OrderTransaction</class>
-        <class>rc.demo.app.models.PaymentTransaction</class>
-
         <class>rc.demo.app.models.User</class>
         <class>rc.demo.app.models.Product</class>
         <class>rc.demo.app.models.Order</class>

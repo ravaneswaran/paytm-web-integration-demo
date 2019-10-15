@@ -13,10 +13,13 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.models.Order;
+import rc.demo.app.models.OrderProductJoin;
 import rc.demo.app.models.OrderTransaction;
+import rc.demo.app.models.Product;
 import rc.demo.app.models.User;
-import rc.demo.app.service.gateway.PaytmOrderTransactionGatewayService;
+import rc.demo.app.service.gateway.PaytmPaymentGatewayService;
 import rc.demo.app.service.local.OrderLocalService;
+import rc.demo.app.service.local.OrderProductJoinLocalService;
 
 public class OrderController extends OrderControllerHelper {
 
@@ -26,13 +29,6 @@ public class OrderController extends OrderControllerHelper {
 	public static final String DETAILS = "details";
 	public static final String LISTING = "listing";
 	public static final String DELETE = "delete";
-
-	public static final String GET = "fetch";
-	public static final String SYNC = "sync";
-	public static final String CANCEL = "cancel";
-	public static final String CANCEL_ORDER = "cancel-order";
-	public static final String CONFIRM = "confirm";
-	public static final String CONFIRM_ORDER = "confirm-order";
 
 	private static final Logger LOGGER = Logger.getLogger(OrderController.class.getName());
 
@@ -56,9 +52,55 @@ public class OrderController extends OrderControllerHelper {
 
 	protected void newOrder(HttpServletRequest request, HttpServletResponse response) {
 		String orderId = request.getParameter("order-id");
-		OrderTransaction orderTransaction = PaytmOrderTransactionGatewayService.fetchOrderTransaction(orderId);
-		if (null != orderTransaction) {
+		System.out.println("orderId ----------------->>>>>>>> "+orderId);
+		List<OrderProductJoin> orderProductJoins = OrderProductJoinLocalService.listOrderProductJoinsByOrderId(orderId);
 
+		long totalPrice = 0l;
+		long gst = 0l;
+		long amount = 0l;
+		if (null != orderProductJoins && !orderProductJoins.isEmpty()) {
+			for (OrderProductJoin orderProductJoin : orderProductJoins) {
+				Product product = orderProductJoin.getProduct();
+				totalPrice += product.getPrice();
+				gst += (product.getPrice() * 5) / 100;
+			}
+		}
+		amount = totalPrice + (2 * gst);
+
+		HttpSession httpSession = request.getSession(false);
+
+		if (null != httpSession) {
+			User sessionUser = (User) httpSession.getAttribute(SessionAttributes.SESSION_USER);
+
+			OrderTransaction orderTransaction = null;
+			try {
+				orderTransaction = PaytmPaymentGatewayService.initiateTransaction(sessionUser.getId(),
+						orderId, amount, "INR", 1, 1);
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				toErrorPage500(request, response);
+				return;
+			}
+
+			if (null != orderTransaction) {
+
+			}
+
+			try {
+				response.getWriter().print("0");
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				toErrorPage500(request, response);
+				return;
+			}
+		} else {
+			try {
+				response.sendRedirect("../pages/login.jsp");
+			} catch (IOException e) {
+				LOGGER.log(Level.SEVERE, e.getMessage(), e);
+				toErrorPage500(request, response);
+				return;
+			}
 		}
 	}
 
@@ -125,7 +167,7 @@ public class OrderController extends OrderControllerHelper {
 		}
 	}
 
-	protected void orderDetails(HttpServletRequest request, HttpServletResponse response){
+	protected void orderDetails(HttpServletRequest request, HttpServletResponse response) {
 
 		HttpSession httpSession = request.getSession(false);
 

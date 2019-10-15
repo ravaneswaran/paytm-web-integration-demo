@@ -7,17 +7,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
 import rc.demo.app.models.OrderTransaction;
+import rc.demo.app.models.PaytmTransaction;
 import rc.demo.app.properties.ApplicationProperties;
+import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class PaytmOrderTransactionGatewayService {
+public class PaytmPaymentGatewayService {
+	
+	private static final Logger LOGGER = Logger.getLogger(PaytmPaymentGatewayService.class.getName());
 
-	public static OrderTransaction createNewOrderTransaction(String userId, String orderId, long amount, String currency,
+	public static OrderTransaction initiateTransaction(String userId, String orderId, long amount, String currency,
 			int receiptNumber, int paymentCapture) throws IOException {
 
 		/* initialize an object */
@@ -81,8 +87,7 @@ public class PaytmOrderTransactionGatewayService {
 			checksum = CheckSumServiceHelper.getCheckSumServiceHelper()
 					.genrateCheckSum(ApplicationProperties.getMerchantKey(), body.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		/* head parameters */
@@ -103,7 +108,6 @@ public class PaytmOrderTransactionGatewayService {
 		/* for Production */
 		// URL url = new
 		// URL("https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=YOUR_ORDER_ID");
-
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
@@ -117,18 +121,20 @@ public class PaytmOrderTransactionGatewayService {
 			InputStream is = connection.getInputStream();
 			BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
 			if ((responseData = responseReader.readLine()) != null) {
-				System.out.append("Response: " + responseData);
+				LOGGER.log(Level.INFO, responseData);
 			}
-			// System.out.append("Request: " + post_data);
 			responseReader.close();
-		} catch (Exception exception) {
-			exception.printStackTrace();
+			System.out.println("responseData -------->>>>>> "+responseData);
+			
+			JAXBUnMarshaller<PaytmTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			PaytmTransaction paytmTransaction = jaxbUnMarshaller.unMarshall(responseData, PaytmTransaction.class);
+			
+			System.out.println("paytmTransaction -------->>>>>> "+paytmTransaction);
+			
+			return null;
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+			return null;
 		}
-
-		return null;
-	}
-
-	public static OrderTransaction fetchOrderTransaction(String orderId) {
-		return null;
 	}
 }
