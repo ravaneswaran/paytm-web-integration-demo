@@ -1,4 +1,4 @@
-package rc.demo.app.service.local;
+package rc.demo.app.local.service;
 
 import rc.demo.app.dao.OrderDAO;
 import rc.demo.app.models.Order;

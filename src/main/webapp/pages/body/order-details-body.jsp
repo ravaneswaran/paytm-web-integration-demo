@@ -3,7 +3,7 @@
 <%@page import="rc.demo.app.properties.ApplicationProperties"%>
 <%@page import="rc.demo.app.util.NumberFormatterUtil"%>
 <%@page import="rc.demo.app.models.Product"%>
-<%@page import="rc.demo.app.service.local.OrderProductJoinLocalService"%>
+<%@page import="rc.demo.app.local.service.OrderProductJoinLocalService"%>
 <%@page import="rc.demo.app.models.OrderProductJoin"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.demo.app.SessionAttributes"%>

@@ -1,9 +1,9 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="rc.demo.app.service.local.ProductLocalService"%>
+<%@page import="rc.demo.app.local.service.ProductLocalService"%>
 <%@page import="rc.demo.app.models.Product"%>
 <%@page import="rc.demo.app.models.OrderProductJoin"%>
-<%@page import="rc.demo.app.service.local.OrderProductJoinLocalService"%>
-<%@page import="rc.demo.app.service.local.OrderLocalService"%>
+<%@page import="rc.demo.app.local.service.OrderProductJoinLocalService"%>
+<%@page import="rc.demo.app.local.service.OrderLocalService"%>
 <%@page import="rc.demo.app.models.Order"%>
 <%@page import="java.util.List"%>
 <%@page import="rc.demo.app.SessionAttributes"%>

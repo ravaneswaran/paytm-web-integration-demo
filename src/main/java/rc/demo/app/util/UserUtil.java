@@ -1,7 +1,7 @@
 package rc.demo.app.util;
 
+import rc.demo.app.local.service.UserLocalService;
 import rc.demo.app.models.User;
-import rc.demo.app.service.local.UserLocalService;
 
 import java.util.Date;
 import java.util.logging.Logger;

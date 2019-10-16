@@ -4,7 +4,7 @@
 <%@page import="rc.demo.app.SessionAttributes"%>
 <%@page import="rc.demo.app.models.Product"%>
 <%@page import="java.util.List"%>
-<%@page import="rc.demo.app.service.local.ProductLocalService"%>
+<%@page import="rc.demo.app.local.service.ProductLocalService"%>
 
 
 <%

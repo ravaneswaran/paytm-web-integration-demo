@@ -1,4 +1,4 @@
-package rc.demo.app.service.gateway;
+package rc.demo.app.gateway.service;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

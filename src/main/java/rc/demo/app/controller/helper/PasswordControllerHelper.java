@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.NotImplementedException;
 
 import rc.demo.app.controller.PaytmController;
+import rc.demo.app.local.service.UserLocalService;
 import rc.demo.app.models.User;
-import rc.demo.app.service.local.UserLocalService;
 
 public class PasswordControllerHelper extends PaytmController {
 

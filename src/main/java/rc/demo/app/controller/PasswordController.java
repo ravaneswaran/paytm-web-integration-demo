@@ -3,8 +3,8 @@ package rc.demo.app.controller;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.PasswordControllerHelper;
+import rc.demo.app.local.service.UserLocalService;
 import rc.demo.app.models.User;
-import rc.demo.app.service.local.UserLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

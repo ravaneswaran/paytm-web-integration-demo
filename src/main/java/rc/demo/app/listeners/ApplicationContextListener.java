@@ -1,8 +1,8 @@
 package rc.demo.app.listeners;
 
+import rc.demo.app.local.service.ProductLocalService;
+import rc.demo.app.local.service.UserLocalService;
 import rc.demo.app.models.User;
-import rc.demo.app.service.local.ProductLocalService;
-import rc.demo.app.service.local.UserLocalService;
 import rc.demo.app.util.ProductUtil;
 import rc.demo.app.util.UserUtil;
 
