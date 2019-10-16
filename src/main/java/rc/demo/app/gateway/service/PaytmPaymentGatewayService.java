@@ -23,6 +23,10 @@ import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 public class PaytmPaymentGatewayService {
 
 	private static final Logger LOGGER = Logger.getLogger(PaytmPaymentGatewayService.class.getName());
+	
+	public static PaytmTransactionStatusService getPaytmTransactionStatusService(String orderId) {
+		return new PaytmTransactionStatusService(orderId);
+	}
 
 	public static PaytmTransaction initiateTransaction(String userId, String orderId, long amount, String currency) throws IOException {
 		/* initialize an object */

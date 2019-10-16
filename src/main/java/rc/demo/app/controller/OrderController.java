@@ -13,6 +13,7 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.models.PaytmTransaction;
+import rc.demo.app.gateway.models.PaytmTransactionStatus;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
 import rc.demo.app.local.service.OrderProductJoinLocalService;
@@ -75,6 +76,10 @@ public class OrderController extends OrderControllerHelper {
 			try {
 				paytmTransaction = PaytmPaymentGatewayService.initiateTransaction(sessionUser.getId(),
 						orderId, amount, "INR");
+				
+				PaytmTransactionStatus paytmTransactionStatus = PaytmPaymentGatewayService.getPaytmTransactionStatusService(orderId).serve();
+				
+				System.out.println("paytmTransactionStatus ----------------->>>>>> "+paytmTransactionStatus);
 			} catch (IOException e) {
 				LOGGER.log(Level.SEVERE, e.getMessage(), e);
 				toErrorPage500(request, response);
