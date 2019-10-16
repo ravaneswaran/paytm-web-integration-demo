@@ -16,31 +16,33 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.models.PaytmRefund;
+import rc.demo.app.gateway.models.PaytmTransaction;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
+public class InitiateTransactionService implements PaymentGatewayService<PaytmTransaction> {
 
-	private static final Logger LOGGER = Logger.getLogger(PaytmRefundService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(InitiateTransactionService.class.getName());
+
+	private String userId;
 
 	private String orderId;
 
-	private String paytmTransactionId;
+	private long amount;
 
-	private String refundId;
+	private String currency;
 
-	private long amountToRefund;
+	public InitiateTransactionService(String userId, String orderId, long amount, String currency) {
 
-	public PaytmRefundService(String orderId, String paytmTransactionId, String refundId, long amountToRefund) {
+		this.userId = userId;
 		this.orderId = orderId;
-		this.paytmTransactionId = paytmTransactionId;
-		this.refundId = refundId;
-		this.amountToRefund = amountToRefund;
+		this.amount = amount;
+		this.currency = currency;
+
 	}
 
 	@Override
-	public PaytmRefund serve() {
+	public PaytmTransaction serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -48,25 +50,49 @@ public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
 		JSONObject body = new JSONObject();
 
 		/*
+		 * for custom checkout value is 'Payment' and for intelligent router is
+		 * 'UNI_PAY'
+		 */
+		body.put("requestType", "Payment");
+
+		/*
 		 * Find your MID in your Paytm Dashboard at
 		 * https://dashboard.paytm.com/next/apikeys
 		 */
 		body.put("mid", ApplicationProperties.getMerchantId());
 
-		/* This has fixed value for refund transaction */
-		body.put("txnType", "REFUND");
+		/*
+		 * Find your Website Name in your Paytm Dashboard at
+		 * https://dashboard.paytm.com/next/apikeys
+		 */
+		body.put("websiteName", "localhost");
 
-		/* Enter your order id for which refund needs to be initiated */
+		/* Enter your unique order id */
 		body.put("orderId", this.orderId);
 
-		/* Enter transaction id received from Paytm for respective successful order */
-		body.put("txnId", this.paytmTransactionId);
+		/* on completion of transaction, we will send you the response on this URL */
+		body.put("callbackUrl", String.format(ApplicationProperties.getCallbackURL(), this.orderId));
 
-		/* Enter numeric or alphanumeric unique refund id */
-		body.put("refId", this.refundId);
+		/* initialize an object for txnAmount */
+		JSONObject txnAmount = new JSONObject();
 
-		/* Enter amount that needs to be refunded, this must be numeric */
-		body.put("refundAmount", String.valueOf(this.amountToRefund));
+		/* Transaction Amount Value */
+		txnAmount.put("value", this.amount);
+
+		/* Transaction Amount Currency */
+		txnAmount.put("currency", this.currency);
+
+		/* initialize an object for userInfo */
+		JSONObject userInfo = new JSONObject();
+
+		/* unique id that belongs to your customer */
+		userInfo.put("custId", this.userId);
+
+		/* put txnAmount object in body */
+		body.put("txnAmount", txnAmount);
+
+		/* put userInfo object in body */
+		body.put("userInfo", userInfo);
 
 		/**
 		 * Generate checksum by parameters we have in body You can get Checksum JAR from
@@ -84,12 +110,6 @@ public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
 		/* head parameters */
 		JSONObject head = new JSONObject();
 
-		/*
-		 * This is used when you have two different merchant keys. In case you have only
-		 * one please put - C11
-		 */
-		head.put("clientId", "C11");
-
 		/* put generated checksum value here */
 		head.put("signature", checksum);
 
@@ -98,16 +118,20 @@ public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
 
-		/* for Production */
-		// URL url = new URL("https://securegw.paytm.in/refund/apply");
+		LOGGER.info(String.format("REQUST DATA : %s", post_data));
+
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL("https://securegw-stage.paytm.in/refund/apply");
+			url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(),
+					ApplicationProperties.getMerchantId(), orderId));
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
+		/* for Production */
+		// URL url = new
+		// URL("https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=YOUR_ORDER_ID");
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
@@ -115,6 +139,7 @@ public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
 			connection.setDoOutput(true);
 
 			DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+
 			requestWriter.writeBytes(post_data);
 			requestWriter.close();
 			String responseData = "";
@@ -125,12 +150,12 @@ public class PaytmRefundService implements PaymentGatewayService<PaytmRefund> {
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund", responseData);
-			LOGGER.info(String.format("PAYTM REFUND STRING : %s", paytmTransactionString));
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-transaction", responseData);
+			LOGGER.info(String.format("PAYTM TRANSACTION STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<PaytmRefund> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmRefund.class);
-			
+			JAXBUnMarshaller<PaytmTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmTransaction.class);
+
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;

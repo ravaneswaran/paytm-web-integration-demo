@@ -20,15 +20,15 @@ import rc.demo.app.gateway.models.PaytmRefundStatus;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class PaytmRefundStatusService implements PaymentGatewayService<PaytmRefundStatus> {
+public class RefundStatusService implements PaymentGatewayService<PaytmRefundStatus> {
 
-	private static final Logger LOGGER = Logger.getLogger(PaytmRefundStatusService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RefundStatusService.class.getName());
 
 	private String orderId;
 
 	private String refundId;
 
-	public PaytmRefundStatusService(String orderId, String refundId) {
+	public RefundStatusService(String orderId, String refundId) {
 		this.orderId = orderId;
 		this.refundId = refundId;
 	}
@@ -63,8 +63,7 @@ public class PaytmRefundStatusService implements PaymentGatewayService<PaytmRefu
 			checksum = CheckSumServiceHelper.getCheckSumServiceHelper()
 					.genrateCheckSum(ApplicationProperties.getMerchantKey(), body.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		/* head parameters */

@@ -2,21 +2,26 @@ package rc.demo.app.gateway.service;
 
 public class PaytmPaymentGatewayService {
 
-	public static PaytmInitiateTransactionService getInitiateTransactionService(String userId, String orderId,
-			long amount, String currency) {
-		return new PaytmInitiateTransactionService(userId, orderId, amount, currency);
+	public static InitiateTransactionService getInitiateTransactionService(String userId, String orderId, long amount,
+			String currency) {
+		return new InitiateTransactionService(userId, orderId, amount, currency);
 	}
 
-	public static PaytmTransactionStatusService getTransactionStatusService(String orderId) {
-		return new PaytmTransactionStatusService(orderId);
+	public static TransactionStatusService getTransactionStatusService(String orderId) {
+		return new TransactionStatusService(orderId);
 	}
 
-	public static PaytmRefundService getRefundService(String orderId, String paytmTransactionId, String refundId,
+	public static RefundService getRefundService(String orderId, String paytmTransactionId, String refundId,
 			long amountToRefund) {
-		return new PaytmRefundService(orderId, paytmTransactionId, refundId, amountToRefund);
+		return new RefundService(orderId, paytmTransactionId, refundId, amountToRefund);
 	}
-	
-	public static PaytmRefundStatusService getRefundStatusService(String orderId, String refundId) {
-		return new PaytmRefundStatusService(orderId, refundId);
+
+	public static RefundStatusService getRefundStatusService(String orderId, String refundId) {
+		return new RefundStatusService(orderId, refundId);
+	}
+
+	public static TransactionUpdateService getTransactionUpdateService(String orderId, String customerId,
+			String transactionToken, String currency, long amount) {
+		return new TransactionUpdateService(orderId, customerId, transactionToken, currency, amount);
 	}
 }
