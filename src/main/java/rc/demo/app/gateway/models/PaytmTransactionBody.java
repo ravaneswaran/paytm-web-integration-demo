@@ -1,4 +1,4 @@
-package rc.demo.app.models;
+package rc.demo.app.gateway.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
