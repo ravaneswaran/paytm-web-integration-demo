@@ -99,6 +99,8 @@ public class PaytmPaymentGatewayService {
 		paytmParams.put("body", body);
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
+		
+		LOGGER.info(post_data);
 
 		/* for Staging */
 		URL url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(),
@@ -114,6 +116,7 @@ public class PaytmPaymentGatewayService {
 			connection.setDoOutput(true);
 
 			DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+			
 			requestWriter.writeBytes(post_data);
 			requestWriter.close();
 			String responseData = "";
