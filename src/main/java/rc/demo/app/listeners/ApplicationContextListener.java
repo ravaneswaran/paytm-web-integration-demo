@@ -12,6 +12,8 @@ import javax.servlet.ServletContextListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,5 +103,13 @@ public class ApplicationContextListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
+	}
+	
+	static {
+		Handler handlerObj = new ConsoleHandler();
+		handlerObj.setLevel(Level.ALL);
+		LOGGER.addHandler(handlerObj);
+		LOGGER.setLevel(Level.ALL);
+		LOGGER.setUseParentHandlers(false);
 	}
 }
