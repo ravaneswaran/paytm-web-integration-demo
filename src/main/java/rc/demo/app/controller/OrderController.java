@@ -2,6 +2,7 @@ package rc.demo.app.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
+import rc.demo.app.gateway.models.PaytmRefund;
 import rc.demo.app.gateway.models.PaytmTransaction;
 import rc.demo.app.gateway.models.PaytmTransactionStatus;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
@@ -72,21 +74,19 @@ public class OrderController extends OrderControllerHelper {
 		if (null != httpSession) {
 			User sessionUser = (User) httpSession.getAttribute(SessionAttributes.SESSION_USER);
 
-			PaytmTransaction paytmTransaction = null;
-			try {
-				paytmTransaction = PaytmPaymentGatewayService.initiateTransaction(sessionUser.getId(),
-						orderId, amount, "INR");
-				
-				PaytmTransactionStatus paytmTransactionStatus = PaytmPaymentGatewayService.getPaytmTransactionStatusService(orderId).serve();
-				
-				System.out.println("paytmTransactionStatus ----------------->>>>>> "+paytmTransactionStatus);
-			} catch (IOException e) {
-				LOGGER.log(Level.SEVERE, e.getMessage(), e);
-				toErrorPage500(request, response);
-				return;
-			}
+			PaytmTransaction paytmTransaction = PaytmPaymentGatewayService
+					.getInitiateTransactionService(sessionUser.getId(), orderId, amount, "INR").serve();
 
 			if (null != paytmTransaction) {
+
+				PaytmPaymentGatewayService.getTransactionStatusService(orderId).serve();
+
+				String randomRefundId = String.format("REFUND_%s_ID", new Random().nextLong());
+				PaytmRefund paytmRefund = PaytmPaymentGatewayService.getRefundService(orderId, paytmTransaction.getBody().getTxnToken(),
+						randomRefundId, 12345l).serve();
+				
+				System.out.println("paytmRefund -------------->>>>>>>>> "+paytmRefund);
+
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {
 					response.getWriter().print("0");
