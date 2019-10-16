@@ -15,4 +15,8 @@ public class PaytmPaymentGatewayService {
 			long amountToRefund) {
 		return new PaytmRefundService(orderId, paytmTransactionId, refundId, amountToRefund);
 	}
+	
+	public static PaytmRefundStatusService getRefundStatusService(String orderId, String refundId) {
+		return new PaytmRefundStatusService(orderId, refundId);
+	}
 }

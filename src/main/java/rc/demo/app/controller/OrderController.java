@@ -1,6 +1,7 @@
 package rc.demo.app.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -13,9 +14,8 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
-import rc.demo.app.gateway.models.PaytmRefund;
+import rc.demo.app.gateway.models.PaytmRefundStatus;
 import rc.demo.app.gateway.models.PaytmTransaction;
-import rc.demo.app.gateway.models.PaytmTransactionStatus;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
 import rc.demo.app.local.service.OrderProductJoinLocalService;
@@ -81,11 +81,11 @@ public class OrderController extends OrderControllerHelper {
 
 				PaytmPaymentGatewayService.getTransactionStatusService(orderId).serve();
 
-				String randomRefundId = String.format("REFUND_%s_ID", new Random().nextLong());
-				PaytmRefund paytmRefund = PaytmPaymentGatewayService.getRefundService(orderId, paytmTransaction.getBody().getTxnToken(),
+				String randomRefundId = String.format("REFUND_%s_ID", new Date().getTime());
+				PaytmPaymentGatewayService.getRefundService(orderId, paytmTransaction.getBody().getTxnToken(),
 						randomRefundId, 12345l).serve();
 				
-				System.out.println("paytmRefund -------------->>>>>>>>> "+paytmRefund);
+				PaytmPaymentGatewayService.getRefundStatusService(orderId, randomRefundId).serve();
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {
