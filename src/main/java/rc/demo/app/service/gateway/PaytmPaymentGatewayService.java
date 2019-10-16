@@ -100,7 +100,7 @@ public class PaytmPaymentGatewayService {
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
 		
-		LOGGER.info(post_data);
+		LOGGER.info(String.format("REQUST DATA : %s", post_data));
 
 		/* for Staging */
 		URL url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(),
@@ -123,12 +123,12 @@ public class PaytmPaymentGatewayService {
 			InputStream is = connection.getInputStream();
 			BufferedReader responseReader = new BufferedReader(new InputStreamReader(is));
 			if ((responseData = responseReader.readLine()) != null) {
-				LOGGER.info(responseData);
+				LOGGER.info(String.format("RESPONSE DATA : %s", responseData));
 			}
 			responseReader.close();
 
 			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-transaction", responseData);
-			LOGGER.info(paytmTransactionString);
+			LOGGER.info(String.format("PAYTM TRANSACTION STRING : %s", paytmTransactionString));
 
 			JAXBUnMarshaller<PaytmTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
 			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmTransaction.class);
