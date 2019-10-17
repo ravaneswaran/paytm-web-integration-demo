@@ -13,12 +13,9 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
-import rc.demo.app.gateway.paytm.models.PaymentStatus;
-import rc.demo.app.gateway.paytm.models.ProcessTransaction;
+import rc.demo.app.gateway.paytm.models.Subscription;
 import rc.demo.app.gateway.paytm.models.Transaction;
-import rc.demo.app.gateway.paytm.models.TransactionUpdate;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
-import rc.demo.app.gateway.service.ProcessTransactionService;
 import rc.demo.app.local.service.OrderLocalService;
 import rc.demo.app.local.service.OrderProductJoinLocalService;
 import rc.demo.app.models.Order;
@@ -90,15 +87,23 @@ public class OrderController extends OrderControllerHelper {
 
 				PaytmPaymentGatewayService.getRefundStatusService(orderId, randomRefundId).serve();
 
-				PaytmPaymentGatewayService.getTransactionUpdateService(
-						orderId, sessionUser.getId(), paytmTransaction.getBody().getTxnToken(), "INR", 2).serve();
+				PaytmPaymentGatewayService.getTransactionUpdateService(orderId, sessionUser.getId(),
+						paytmTransaction.getBody().getTxnToken(), "INR", 2).serve();
 
 				PaytmPaymentGatewayService.getProcessTransactionService(orderId,
-						paytmTransaction.getBody().getTxnToken(), "CREDIT_CARD", "OTP", "|5242165000203040|983|122022").serve();
-				
-				PaymentStatus paymentStatus = PaytmPaymentGatewayService.getPaymentStatusService(orderId).serve();
+						paytmTransaction.getBody().getTxnToken(), "CREDIT_CARD", "OTP", "|5242165000203040|983|122022")
+						.serve();
 
-				System.out.println("paymentStatus -------------------->>>>>>> " + paymentStatus);
+				PaytmPaymentGatewayService.getPaymentStatusService(orderId).serve();
+
+				long now = System.currentTimeMillis();
+				long thirtyDays = now + (30 * (1440 * 60 * 1000));
+				Subscription subscription = PaytmPaymentGatewayService
+						.getInitiateSubscriptionService(sessionUser.getId(), orderId, "100.00", "INR", "200.00", "PPI",
+								"VARIABLE", 1, "MONTHLY", now, thirtyDays, 3, 1, 3)
+						.serve();
+
+				System.out.println("subscription -------------------->>>>>>> " + subscription);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

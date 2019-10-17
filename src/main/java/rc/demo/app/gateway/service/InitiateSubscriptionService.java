@@ -9,11 +9,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
+import com.paytm.pg.merchant.CheckSumServiceHelper;
+
+import rc.demo.app.LogMessageDecorator;
 import rc.demo.app.gateway.paytm.models.Subscription;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
@@ -83,28 +88,6 @@ public class InitiateSubscriptionService implements PaymentGatewayService<Subscr
 
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
-
-		JSONObject head = new JSONObject();
-
-		/*
-		 * ClientId by which key checksum is created, required to validate the checksum.
-		 * Eg C11.
-		 */
-		head.put("clientId", "C11");
-
-		/* version of the API. Current version is v1. */
-		head.put("version", "v1");
-
-		/* UNIX timestamp of the time request is being sent. */
-		head.put("requestTimestamp", System.currentTimeMillis());
-
-		/*
-		 * For websites, the value is WEB and For Mobile websites/App, the value is WAP.
-		 */
-		head.put("channelId", "WEB");
-
-		/* Checksum string created by using Paytm checksum library. */
-		head.put("signature", "");
 
 		JSONObject transactionAmount = new JSONObject();
 
@@ -225,10 +208,40 @@ public class InitiateSubscriptionService implements PaymentGatewayService<Subscr
 		 * On completion of transaction, Paytm payment gateway will send the response on
 		 * this URL.. Sample URL is - https://merchant.com/callback/
 		 */
-		body.put("callbackUrl", "");
+		body.put("callbackUrl", String.format(ApplicationProperties.getSubscriptionCallbackURL(), this.orderId));
 
 		body.put("userInfo", userInfo);
 		body.put("txnAmount", transactionAmount);
+
+		JSONObject head = new JSONObject();
+
+		/*
+		 * ClientId by which key checksum is created, required to validate the checksum.
+		 * Eg C11.
+		 */
+		head.put("clientId", "C11");
+
+		/* version of the API. Current version is v1. */
+		head.put("version", "v1");
+
+		/* UNIX timestamp of the time request is being sent. */
+		head.put("requestTimestamp", System.currentTimeMillis());
+
+		/*
+		 * For websites, the value is WEB and For Mobile websites/App, the value is WAP.
+		 */
+		head.put("channelId", "WEB");
+
+		String checksum = "";
+		try {
+			checksum = CheckSumServiceHelper.getCheckSumServiceHelper()
+					.genrateCheckSum(ApplicationProperties.getMerchantKey(), body.toString());
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
+		}
+
+		/* Checksum string created by using Paytm checksum library. */
+		head.put("signature", checksum);
 
 		paytmParams.put("head", head);
 		paytmParams.put("body", body);
@@ -267,15 +280,24 @@ public class InitiateSubscriptionService implements PaymentGatewayService<Subscr
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-subscription", responseData);
-			LOGGER.info(String.format("PAYTM INITIATE SUBSRIPTION STRING : %s", paytmTransactionString));
+			String paytmSubscriptionString = String.format("{\"%s\":%s}", "paytm-subscription", responseData);
+			LOGGER.info(LogMessageDecorator
+					.decorateInfo(String.format("PAYTM INITIATE SUBSRIPTION STRING : %s", paytmSubscriptionString)));
 
 			JAXBUnMarshaller<Subscription> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Subscription.class);
+			return jaxbUnMarshaller.unMarshall(paytmSubscriptionString, Subscription.class);
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
 		}
+	}
+	
+	static {
+		Handler handlerObj = new ConsoleHandler();
+		handlerObj.setLevel(Level.ALL);
+		LOGGER.addHandler(handlerObj);
+		LOGGER.setLevel(Level.ALL);
+		LOGGER.setUseParentHandlers(false);
 	}
 }
