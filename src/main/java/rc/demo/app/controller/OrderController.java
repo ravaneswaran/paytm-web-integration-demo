@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
+import rc.demo.app.gateway.paytm.models.PaymentStatus;
 import rc.demo.app.gateway.paytm.models.ProcessTransaction;
 import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.gateway.paytm.models.TransactionUpdate;
@@ -92,10 +93,12 @@ public class OrderController extends OrderControllerHelper {
 				PaytmPaymentGatewayService.getTransactionUpdateService(
 						orderId, sessionUser.getId(), paytmTransaction.getBody().getTxnToken(), "INR", 2).serve();
 
-				ProcessTransaction paytmProcessTransaction = PaytmPaymentGatewayService.getProcessTransactionService(orderId,
+				PaytmPaymentGatewayService.getProcessTransactionService(orderId,
 						paytmTransaction.getBody().getTxnToken(), "CREDIT_CARD", "OTP", "|5242165000203040|983|122022").serve();
+				
+				PaymentStatus paymentStatus = PaytmPaymentGatewayService.getPaymentStatusService(orderId).serve();
 
-				System.out.println("paytmProcessTransaction -------------------->>>>>>> " + paytmProcessTransaction);
+				System.out.println("paymentStatus -------------------->>>>>>> " + paymentStatus);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

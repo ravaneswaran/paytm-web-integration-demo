@@ -29,4 +29,8 @@ public class PaytmPaymentGatewayService {
 			String paymentMode, String authMode, String cardInfo) {
 		return new ProcessTransactionService(orderId, transactionToken, paymentMode, authMode, cardInfo);
 	}
+	
+	public static PaymentStatusService getPaymentStatusService(String orderId) {
+		return new PaymentStatusService(orderId);
+	}
 }
