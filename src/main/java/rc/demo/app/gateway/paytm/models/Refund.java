@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,27 +7,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-refund")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmRefund {
+public class Refund {
 	
 	@XmlElement(name = "head")
-	private PaytmRefundHead paytmRefundHead;
+	private RefundHead paytmRefundHead;
 	
 	@XmlElement(name = "body")
-	private PaytmRefundBody paytmRefundBody;
+	private RefundBody paytmRefundBody;
 
-	public PaytmRefundHead getPaytmRefundHead() {
+	public RefundHead getPaytmRefundHead() {
 		return paytmRefundHead;
 	}
 
-	public void setPaytmRefundHead(PaytmRefundHead paytmRefundHead) {
+	public void setPaytmRefundHead(RefundHead paytmRefundHead) {
 		this.paytmRefundHead = paytmRefundHead;
 	}
 
-	public PaytmRefundBody getPaytmRefundBody() {
+	public RefundBody getPaytmRefundBody() {
 		return paytmRefundBody;
 	}
 
-	public void setPaytmRefundBody(PaytmRefundBody paytmRefundBody) {
+	public void setPaytmRefundBody(RefundBody paytmRefundBody) {
 		this.paytmRefundBody = paytmRefundBody;
 	}
 }

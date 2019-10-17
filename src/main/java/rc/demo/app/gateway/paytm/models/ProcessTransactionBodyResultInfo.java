@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,10 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "resultInfo")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmTransactionUpdateResultInfo {
-	
-	/*{"resultStatus":"S","resultCode":"0000","resultMsg":
-	 * "Success"}*/
+public class ProcessTransactionBodyResultInfo {
 	
 	@XmlElement(name = "resultStatus")
 	private String resultStatus;
@@ -20,6 +17,9 @@ public class PaytmTransactionUpdateResultInfo {
 	
 	@XmlElement(name = "resultMsg")
 	private String resultMessage;
+	
+	@XmlElement(name = "retry")
+	private boolean retry;
 
 	public String getResultStatus() {
 		return resultStatus;
@@ -43,5 +43,13 @@ public class PaytmTransactionUpdateResultInfo {
 
 	public void setResultMessage(String resultMessage) {
 		this.resultMessage = resultMessage;
+	}
+
+	public boolean isRetry() {
+		return retry;
+	}
+
+	public void setRetry(boolean retry) {
+		this.retry = retry;
 	}
 }

@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,27 +7,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-process-transaction")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmProcessTransaction {
+public class ProcessTransaction {
 	
 	@XmlElement(name = "head")
-	private PaytmProcessTransactionHead paytmProcessTransactionHead;
+	private ProcessTransactionHead paytmProcessTransactionHead;
 	
 	@XmlElement(name = "body")
-	private PaytmProcessTransactionBody paytmProcessTransactionBody;
+	private ProcessTransactionBody paytmProcessTransactionBody;
 
-	public PaytmProcessTransactionHead getPaytmProcessTransactionHead() {
+	public ProcessTransactionHead getPaytmProcessTransactionHead() {
 		return paytmProcessTransactionHead;
 	}
 
-	public void setPaytmProcessTransactionHead(PaytmProcessTransactionHead paytmProcessTransactionHead) {
+	public void setPaytmProcessTransactionHead(ProcessTransactionHead paytmProcessTransactionHead) {
 		this.paytmProcessTransactionHead = paytmProcessTransactionHead;
 	}
 
-	public PaytmProcessTransactionBody getPaytmProcessTransactionBody() {
+	public ProcessTransactionBody getPaytmProcessTransactionBody() {
 		return paytmProcessTransactionBody;
 	}
 
-	public void setPaytmProcessTransactionBody(PaytmProcessTransactionBody paytmProcessTransactionBody) {
+	public void setPaytmProcessTransactionBody(ProcessTransactionBody paytmProcessTransactionBody) {
 		this.paytmProcessTransactionBody = paytmProcessTransactionBody;
 	}
 

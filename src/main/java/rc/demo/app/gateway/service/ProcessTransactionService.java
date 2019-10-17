@@ -12,11 +12,11 @@ import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
-import rc.demo.app.gateway.models.PaytmProcessTransaction;
+import rc.demo.app.gateway.paytm.models.ProcessTransaction;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class ProcessTransactionService implements PaymentGatewayService<PaytmProcessTransaction> {
+public class ProcessTransactionService implements PaymentGatewayService<ProcessTransaction> {
 
 	private static final Logger LOGGER = Logger.getLogger(RefundService.class.getName());
 
@@ -40,7 +40,7 @@ public class ProcessTransactionService implements PaymentGatewayService<PaytmPro
 	}
 
 	@Override
-	public PaytmProcessTransaction serve() {
+	public ProcessTransaction serve() {
 
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
@@ -135,8 +135,8 @@ public class ProcessTransactionService implements PaymentGatewayService<PaytmPro
 			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-process-transaction", responseData);
 			LOGGER.info(String.format("PAYTM PROCESS TRANSACTION STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<PaytmProcessTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmProcessTransaction.class);
+			JAXBUnMarshaller<ProcessTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, ProcessTransaction.class);
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);

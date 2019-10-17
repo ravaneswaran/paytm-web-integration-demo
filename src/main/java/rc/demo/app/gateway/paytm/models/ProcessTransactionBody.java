@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,32 +7,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "body")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmProcessTransactionBody {
+public class ProcessTransactionBody {
 
 	@XmlElement(name = "resultInfo")
-	private PaytmProcessTransactionBodyResultInfo paytmProcessTransactionBodyResultInfo;
+	private ProcessTransactionBodyResultInfo paytmProcessTransactionBodyResultInfo;
 
 	@XmlElement(name = "txnInfo")
-	private PaytmProcessTransactionBodyTransactionInfo paytmProcessTransactionBodyTransactionInfo;
+	private ProcessTransactionBodyTransactionInfo paytmProcessTransactionBodyTransactionInfo;
 
 	@XmlElement(name = "callBackUrl")
 	private String callBackUrl;
 
-	public PaytmProcessTransactionBodyResultInfo getPaytmProcessTransactionBodyResultInfo() {
+	public ProcessTransactionBodyResultInfo getPaytmProcessTransactionBodyResultInfo() {
 		return paytmProcessTransactionBodyResultInfo;
 	}
 
 	public void setPaytmProcessTransactionBodyResultInfo(
-			PaytmProcessTransactionBodyResultInfo paytmProcessTransactionBodyResultInfo) {
+			ProcessTransactionBodyResultInfo paytmProcessTransactionBodyResultInfo) {
 		this.paytmProcessTransactionBodyResultInfo = paytmProcessTransactionBodyResultInfo;
 	}
 
-	public PaytmProcessTransactionBodyTransactionInfo getPaytmProcessTransactionBodyTransactionInfo() {
+	public ProcessTransactionBodyTransactionInfo getPaytmProcessTransactionBodyTransactionInfo() {
 		return paytmProcessTransactionBodyTransactionInfo;
 	}
 
 	public void setPaytmProcessTransactionBodyTransactionInfo(
-			PaytmProcessTransactionBodyTransactionInfo paytmProcessTransactionBodyTransactionInfo) {
+			ProcessTransactionBodyTransactionInfo paytmProcessTransactionBodyTransactionInfo) {
 		this.paytmProcessTransactionBodyTransactionInfo = paytmProcessTransactionBodyTransactionInfo;
 	}
 

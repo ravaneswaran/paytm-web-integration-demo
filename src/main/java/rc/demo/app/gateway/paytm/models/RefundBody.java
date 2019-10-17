@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "body")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmRefundBody {
+public class RefundBody {
 	
 	@XmlElement(name = "orderId")
 	private String orderId;
@@ -16,7 +16,7 @@ public class PaytmRefundBody {
 	private String merchantId;
 	
 	@XmlElement(name = "resultInfo")
-	private PaytmRefundResultInfo paytmRefundResultInfo;
+	private RefundResultInfo paytmRefundResultInfo;
 	
 	@XmlElement(name = "txnId")
 	private String transactionId;
@@ -40,11 +40,11 @@ public class PaytmRefundBody {
 		this.merchantId = merchantId;
 	}
 
-	public PaytmRefundResultInfo getPaytmRefundResultInfo() {
+	public RefundResultInfo getPaytmRefundResultInfo() {
 		return paytmRefundResultInfo;
 	}
 
-	public void setPaytmRefundResultInfo(PaytmRefundResultInfo paytmRefundResultInfo) {
+	public void setPaytmRefundResultInfo(RefundResultInfo paytmRefundResultInfo) {
 		this.paytmRefundResultInfo = paytmRefundResultInfo;
 	}
 	

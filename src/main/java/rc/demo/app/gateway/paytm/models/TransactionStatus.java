@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-transaction-status")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmTransactionStatus {
+public class TransactionStatus {
 		
 	@XmlElement(name = "TXNID")
 	private String transactionId;

@@ -16,11 +16,11 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.models.PaytmRefund;
+import rc.demo.app.gateway.paytm.models.Refund;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class RefundService implements PaymentGatewayService<PaytmRefund> {
+public class RefundService implements PaymentGatewayService<Refund> {
 
 	private static final Logger LOGGER = Logger.getLogger(RefundService.class.getName());
 
@@ -40,7 +40,7 @@ public class RefundService implements PaymentGatewayService<PaytmRefund> {
 	}
 
 	@Override
-	public PaytmRefund serve() {
+	public Refund serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -128,8 +128,8 @@ public class RefundService implements PaymentGatewayService<PaytmRefund> {
 			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund", responseData);
 			LOGGER.info(String.format("PAYTM REFUND STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<PaytmRefund> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmRefund.class);
+			JAXBUnMarshaller<Refund> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Refund.class);
 			
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);

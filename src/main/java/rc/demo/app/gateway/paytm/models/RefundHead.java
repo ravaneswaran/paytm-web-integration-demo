@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "head")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmRefundHead {
+public class RefundHead {
 
 	@XmlElement(name = "clientId")
 	private String clientId;

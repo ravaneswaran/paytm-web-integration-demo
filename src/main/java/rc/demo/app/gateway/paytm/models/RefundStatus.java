@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-refund-status")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmRefundStatus extends PaytmRefund{
+public class RefundStatus extends Refund{
 
 	/*
 	 * {"paytm-refund-status":{"head":{"clientId":"C11","responseTimestamp":

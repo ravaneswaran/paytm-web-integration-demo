@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "resultInfo")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmProcessTransactionBodyResultInfo {
+public class TransactionBodyResultInfo {
 	
 	@XmlElement(name = "resultStatus")
 	private String resultStatus;
@@ -16,10 +16,7 @@ public class PaytmProcessTransactionBodyResultInfo {
 	private String resultCode;
 	
 	@XmlElement(name = "resultMsg")
-	private String resultMessage;
-	
-	@XmlElement(name = "retry")
-	private boolean retry;
+	private String resultMsg;
 
 	public String getResultStatus() {
 		return resultStatus;
@@ -37,19 +34,11 @@ public class PaytmProcessTransactionBodyResultInfo {
 		this.resultCode = resultCode;
 	}
 
-	public String getResultMessage() {
-		return resultMessage;
+	public String getResultMsg() {
+		return resultMsg;
 	}
 
-	public void setResultMessage(String resultMessage) {
-		this.resultMessage = resultMessage;
-	}
-
-	public boolean isRetry() {
-		return retry;
-	}
-
-	public void setRetry(boolean retry) {
-		this.retry = retry;
+	public void setResultMsg(String resultMsg) {
+		this.resultMsg = resultMsg;
 	}
 }

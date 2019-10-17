@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "body")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmTransactionBody {
+public class TransactionBody {
 	
 	@XmlElement(name = "txnToken")
 	private String txnToken;
@@ -18,7 +18,7 @@ public class PaytmTransactionBody {
 	@XmlElement(name = "authenticated")
 	private boolean authenticated;
 	
-	private PaytmTransactionBodyResultInfo paytmTransactionBodyResultInfo;
+	private TransactionBodyResultInfo paytmTransactionBodyResultInfo;
 
 	public String getTxnToken() {
 		return txnToken;
@@ -44,11 +44,11 @@ public class PaytmTransactionBody {
 		this.authenticated = authenticated;
 	}
 
-	public PaytmTransactionBodyResultInfo getPaytmTransactionBodyResultInfo() {
+	public TransactionBodyResultInfo getPaytmTransactionBodyResultInfo() {
 		return paytmTransactionBodyResultInfo;
 	}
 
-	public void setPaytmTransactionBodyResultInfo(PaytmTransactionBodyResultInfo paytmTransactionBodyResultInfo) {
+	public void setPaytmTransactionBodyResultInfo(TransactionBodyResultInfo paytmTransactionBodyResultInfo) {
 		this.paytmTransactionBodyResultInfo = paytmTransactionBodyResultInfo;
 	}
 }

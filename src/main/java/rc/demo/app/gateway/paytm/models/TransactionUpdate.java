@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-transaction-update")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmTransactionUpdate {
+public class TransactionUpdate {
 
 	/*
 	 * {"paytm-transaction-update":{"head":{"responseTimestamp":"1571260458072",
@@ -18,24 +18,24 @@ public class PaytmTransactionUpdate {
 	 */
 	
 	@XmlElement(name = "head")
-	private PaytmTransactionUpdateHead paytmTransactionUpdateHead;
+	private TransactionUpdateHead paytmTransactionUpdateHead;
 	
 	@XmlElement(name = "body")
-	private PaytmTransactionUpdateBody paytmTransactionUpdateBody;
+	private TransactionUpdateBody paytmTransactionUpdateBody;
 
-	public PaytmTransactionUpdateHead getPaytmTransactionUpdateHead() {
+	public TransactionUpdateHead getPaytmTransactionUpdateHead() {
 		return paytmTransactionUpdateHead;
 	}
 
-	public void setPaytmTransactionUpdateHead(PaytmTransactionUpdateHead paytmTransactionUpdateHead) {
+	public void setPaytmTransactionUpdateHead(TransactionUpdateHead paytmTransactionUpdateHead) {
 		this.paytmTransactionUpdateHead = paytmTransactionUpdateHead;
 	}
 
-	public PaytmTransactionUpdateBody getPaytmTransactionUpdateBody() {
+	public TransactionUpdateBody getPaytmTransactionUpdateBody() {
 		return paytmTransactionUpdateBody;
 	}
 
-	public void setPaytmTransactionUpdateBody(PaytmTransactionUpdateBody paytmTransactionUpdateBody) {
+	public void setPaytmTransactionUpdateBody(TransactionUpdateBody paytmTransactionUpdateBody) {
 		this.paytmTransactionUpdateBody = paytmTransactionUpdateBody;
 	}
 }

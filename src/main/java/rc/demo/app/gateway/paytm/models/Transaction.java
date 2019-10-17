@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.models;
+package rc.demo.app.gateway.paytm.models;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,27 +7,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "paytm-transaction")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class PaytmTransaction {
+public class Transaction {
 	
 	@XmlElement(name = "head")
-	private PaytmTransactionHead head;
+	private TransactionHead head;
 	
 	@XmlElement(name = "body")
-	private PaytmTransactionBody body;
+	private TransactionBody body;
 
-	public PaytmTransactionHead getHead() {
+	public TransactionHead getHead() {
 		return head;
 	}
 
-	public void setHead(PaytmTransactionHead head) {
+	public void setHead(TransactionHead head) {
 		this.head = head;
 	}
 
-	public PaytmTransactionBody getBody() {
+	public TransactionBody getBody() {
 		return body;
 	}
 
-	public void setBody(PaytmTransactionBody body) {
+	public void setBody(TransactionBody body) {
 		this.body = body;
 	}
 }

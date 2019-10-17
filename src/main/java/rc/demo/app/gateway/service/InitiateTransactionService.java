@@ -16,11 +16,11 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.models.PaytmTransaction;
+import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class InitiateTransactionService implements PaymentGatewayService<PaytmTransaction> {
+public class InitiateTransactionService implements PaymentGatewayService<Transaction> {
 
 	private static final Logger LOGGER = Logger.getLogger(InitiateTransactionService.class.getName());
 
@@ -42,7 +42,7 @@ public class InitiateTransactionService implements PaymentGatewayService<PaytmTr
 	}
 
 	@Override
-	public PaytmTransaction serve() {
+	public Transaction serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -153,8 +153,8 @@ public class InitiateTransactionService implements PaymentGatewayService<PaytmTr
 			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-transaction", responseData);
 			LOGGER.info(String.format("PAYTM TRANSACTION STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<PaytmTransaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaytmTransaction.class);
+			JAXBUnMarshaller<Transaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Transaction.class);
 
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);

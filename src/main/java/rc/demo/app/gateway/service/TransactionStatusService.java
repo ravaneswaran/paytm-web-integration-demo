@@ -17,11 +17,11 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.models.PaytmTransactionStatus;
+import rc.demo.app.gateway.paytm.models.TransactionStatus;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class TransactionStatusService implements PaymentGatewayService<PaytmTransactionStatus> {
+public class TransactionStatusService implements PaymentGatewayService<TransactionStatus> {
 
 	private static final Logger LOGGER = Logger.getLogger(TransactionStatusService.class.getName());
 
@@ -32,7 +32,7 @@ public class TransactionStatusService implements PaymentGatewayService<PaytmTran
 	}
 
 	@Override
-	public PaytmTransactionStatus serve() {
+	public TransactionStatus serve() {
 		/* initialize a TreeMap object */
 		TreeMap<String, String> paytmParams = new TreeMap<String, String>();
 
@@ -97,8 +97,8 @@ public class TransactionStatusService implements PaymentGatewayService<PaytmTran
 			String paytmTransactionStatusString = String.format("{\"%s\":%s}", "paytm-transaction-status", responseData);
 			LOGGER.info(String.format("PAYTM TRANSACTION STRING : %s", paytmTransactionStatusString));
 			
-			JAXBUnMarshaller<PaytmTransactionStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionStatusString, PaytmTransactionStatus.class);
+			JAXBUnMarshaller<TransactionStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionStatusString, TransactionStatus.class);
 			
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
