@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
-import rc.demo.app.gateway.paytm.models.Subscription;
+import rc.demo.app.gateway.paytm.models.PaymentOption;
 import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
@@ -98,12 +98,13 @@ public class OrderController extends OrderControllerHelper {
 
 				long now = System.currentTimeMillis();
 				long thirtyDays = now + (30 * (1440 * 60 * 1000));
-				Subscription subscription = PaytmPaymentGatewayService
-						.getInitiateSubscriptionService(sessionUser.getId(), orderId, "100.00", "INR", "200.00", "PPI",
-								"VARIABLE", 1, "MONTHLY", now, thirtyDays, 3, 1, 3)
-						.serve();
+				PaytmPaymentGatewayService.getInitiateSubscriptionService(sessionUser.getId(), orderId, "100.00", "INR",
+						"200.00", "PPI", "VARIABLE", 1, "MONTHLY", now, thirtyDays, 3, 1, 3).serve();
 
-				System.out.println("subscription -------------------->>>>>>> " + subscription);
+				PaymentOption paymentOption = PaytmPaymentGatewayService
+						.getPaymentOptionService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
+
+				System.out.println("paymentOption -------------------->>>>>>> " + paymentOption);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

@@ -88,6 +88,10 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.payment.status.api.endpoint");
 	}
 	
+	public static final String getPaymentOptionAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.payment.option.api.endpoint");
+	}
+	
 	public static final String getRefundAPIEndPoint() {
 		return paytmProperties.getProperty("paytm.refund.api.endpoint");
 	}

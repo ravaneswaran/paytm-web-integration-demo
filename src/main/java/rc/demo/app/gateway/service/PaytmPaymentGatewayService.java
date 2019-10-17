@@ -44,4 +44,8 @@ public class PaytmPaymentGatewayService {
 				subscriptionStartDate, subscriptionExpiryDate, subscriptionGraceDays, subscriptionEnableRetry,
 				subscriptionRetryCount);
 	}
+
+	public static PaymentOptionService getPaymentOptionService(String orderId, String transactionToken) {
+		return new PaymentOptionService(orderId, transactionToken);
+	}
 }
