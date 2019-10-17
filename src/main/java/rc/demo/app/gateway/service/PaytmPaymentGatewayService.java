@@ -29,8 +29,19 @@ public class PaytmPaymentGatewayService {
 			String paymentMode, String authMode, String cardInfo) {
 		return new ProcessTransactionService(orderId, transactionToken, paymentMode, authMode, cardInfo);
 	}
-	
+
 	public static PaymentStatusService getPaymentStatusService(String orderId) {
 		return new PaymentStatusService(orderId);
+	}
+
+	public static InitiateSubscriptionService getInitiateSubscriptionService(String customerId, String orderId,
+			String transactionAmount, String currency, String subscriptionMaxAmount, String subscriptionPaymentMode,
+			String subscriptionAmountType, int subscriptionFrequency, String subscriptionFrequencyUnit,
+			long subscriptionStartDate, long subscriptionExpiryDate, int subscriptionGraceDays,
+			int subscriptionEnableRetry, int subscriptionRetryCount) {
+		return new InitiateSubscriptionService(customerId, orderId, transactionAmount, currency, subscriptionMaxAmount,
+				subscriptionPaymentMode, subscriptionAmountType, subscriptionFrequency, subscriptionFrequencyUnit,
+				subscriptionStartDate, subscriptionExpiryDate, subscriptionGraceDays, subscriptionEnableRetry,
+				subscriptionRetryCount);
 	}
 }

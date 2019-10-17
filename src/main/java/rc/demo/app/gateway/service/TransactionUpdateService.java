@@ -105,8 +105,7 @@ public class TransactionUpdateService implements PaymentGatewayService<Transacti
 		/* for Staging */
 		URL url = null;
 		try {
-			String urlString = String.format(
-					"https://securegw-stage.paytm.in/theia/api/v1/updateTransactionDetail?mid=%s&orderId=%s",
+			String urlString = String.format(ApplicationProperties.getTransactionUpdateAPIEndPoint(),
 					ApplicationProperties.getMerchantId(), this.orderId);
 			url = new URL(urlString);
 		} catch (MalformedURLException e) {

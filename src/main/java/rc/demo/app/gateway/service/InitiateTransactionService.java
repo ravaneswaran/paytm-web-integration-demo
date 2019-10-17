@@ -71,7 +71,7 @@ public class InitiateTransactionService implements PaymentGatewayService<Transac
 		body.put("orderId", this.orderId);
 
 		/* on completion of transaction, we will send you the response on this URL */
-		body.put("callbackUrl", String.format(ApplicationProperties.getCallbackURL(), this.orderId));
+		body.put("callbackUrl", String.format(ApplicationProperties.getTransactionCallbackURL(), this.orderId));
 
 		/* initialize an object for txnAmount */
 		JSONObject txnAmount = new JSONObject();
@@ -123,8 +123,8 @@ public class InitiateTransactionService implements PaymentGatewayService<Transac
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL(String.format(ApplicationProperties.getPaymentGatewayEndPointUrl(),
-					ApplicationProperties.getMerchantId(), orderId));
+			url = new URL(String.format(ApplicationProperties.getInitiateTransactionAPIEndPoint(),
+					ApplicationProperties.getMerchantId(), this.orderId));
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}

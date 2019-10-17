@@ -51,6 +51,14 @@ public class ApplicationProperties {
 
 	public ApplicationProperties() {
 	}
+	
+	public static String getOperationMode() {
+		return paytmProperties.getProperty("operation.mode");
+	}
+
+	public static String getValue(String key) {
+		return paytmProperties.getProperty(key);
+	}
 
 	public static final String getMerchantId() {
 		return paytmProperties.getProperty("merchant.id");
@@ -60,19 +68,44 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("merchant.key");
 	}
 
-	public static final String getCallbackURL() {
-		return paytmProperties.getProperty("app.callback.url");
+	public static final String getTransactionCallbackURL() {
+		return paytmProperties.getProperty("paytm.transaction.callback.url");
+	}
+	
+	public static final String getSubscriptionCallbackURL() {
+		return paytmProperties.getProperty("paytm.subscription.callback.url");
+	}
+	
+	public static final String getInitiateTransactionAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.initiate.transaction.api.endpoint");
+	}
+	
+	public static final String getInitiateSubscriptionAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.initiate.subscription.api.endpoint");
+	}
+	
+	public static final String getPaymentStatusAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.payment.status.api.endpoint");
+	}
+	
+	public static final String getRefundAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.refund.api.endpoint");
+	}
+	
+	public static final String getRefundStatusAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.refund.status.api.endpoint");
+	}
+	
+	public static final String getProcessTransactionAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.process.transaction.api.endpoint");
+	}
+	
+	public static final String getTransactionStatusAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.transaction.status.api.endpoint");
+	}
+	
+	public static final String getTransactionUpdateAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.transaction.update.api.endpoint");
 	}
 
-	public static final String getPaymentGatewayEndPointUrl() {
-		return paytmProperties.getProperty("paytm.endpoint.url");
-	}
-
-	public static String getOperationMode() {
-		return paytmProperties.getProperty("operation.mode");
-	}
-
-	public static String getValue(String key) {
-		return paytmProperties.getProperty(key);
-	}
 }

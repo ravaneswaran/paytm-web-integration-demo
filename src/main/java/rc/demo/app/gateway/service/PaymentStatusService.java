@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
+import rc.demo.app.LogMessageDecorator;
 import rc.demo.app.gateway.paytm.models.PaymentStatus;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
@@ -74,7 +75,7 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL("https://securegw-stage.paytm.in/merchant-status/api/v1/getPaymentStatus");
+			url = new URL(ApplicationProperties.getPaymentStatusAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
@@ -101,7 +102,7 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 			responseReader.close();
 
 			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-payment-status", responseData);
-			LOGGER.info(String.format("PAYTM PAYMENT STATUS STRING : %s", paytmTransactionString));
+			LOGGER.info(LogMessageDecorator.decorateInfo(String.format("PAYTM PAYMENT STATUS STRING : %s", paytmTransactionString)));
 
 			JAXBUnMarshaller<PaymentStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
 			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaymentStatus.class);

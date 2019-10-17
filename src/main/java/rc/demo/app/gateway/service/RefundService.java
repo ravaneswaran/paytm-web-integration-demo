@@ -103,7 +103,7 @@ public class RefundService implements PaymentGatewayService<Refund> {
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL("https://securegw-stage.paytm.in/refund/apply");
+			url = new URL(ApplicationProperties.getRefundAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}

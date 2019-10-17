@@ -72,7 +72,7 @@ public class TransactionStatusService implements PaymentGatewayService<Transacti
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL("https://securegw-stage.paytm.in/order/status");
+			url = new URL(ApplicationProperties.getTransactionStatusAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}

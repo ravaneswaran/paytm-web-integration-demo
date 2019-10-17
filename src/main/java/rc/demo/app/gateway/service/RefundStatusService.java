@@ -86,7 +86,7 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL("https://securegw-stage.paytm.in/v2/refund/status");
+			url = new URL(ApplicationProperties.getRefundStatusAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
