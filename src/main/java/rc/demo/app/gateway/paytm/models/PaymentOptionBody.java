@@ -1,27 +1,42 @@
 package rc.demo.app.gateway.paytm.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "body")
 public class PaymentOptionBody {
 
+	@XmlElement(name = "walletOnly")
 	private boolean walletOnly;
 
+	@XmlElement(name = "zeroCostEmi")
 	private boolean zeroCostEmi;
 
+	@XmlElement(name = "pcfEnabled")
 	private boolean pcfEnabled;
 
+	@XmlElement(name = "nativeJsonRequestSupported")
 	private boolean nativeJsonRequestSupported;
 
+	@XmlElement(name = "activeMerchant")
 	private boolean activeMerchant;
 
+	@XmlElement(name = "onTheFlyKYCRequired")
 	private boolean onTheFlyKYCRequired;
 
+	@XmlElement(name = "paymentFlow")
 	private String paymentFlow;
 
+	@XmlElement(name = "resultInfo")
 	private PaymentOptionResultInfo paymentOptionResultInfo;
 
+	@XmlElement(name = "merchantPayOption")
 	private PaymentOptionMerchantPayOption paymentOptionMerchantPayOption;
 
+	@XmlElement(name = "addMoneyPayOption")
 	private PaymentOptionAddMoneyPayOption paymentOptionAddMoneyPayOption;
 
+	@XmlElement(name = "merchantLimitInfo")
 	private PaymentOptionMerchantLimitInfo paymentOptionMerchantLimitInfo;
 
 	public boolean isWalletOnly() {

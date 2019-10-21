@@ -1,13 +1,21 @@
 package rc.demo.app.gateway.paytm.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "isDisabled")
 public class IsDisabled {
 
+	@XmlElement(name = "status")
 	private String status;
 
+	@XmlElement(name = "msg")
 	private String message;
 
+	@XmlElement(name = "userAccountExist")
 	private String userAccountExist;
-
+	
+	@XmlElement(name = "merchantAccept")
 	private String merchantAccept;
 
 	public String getStatus() {

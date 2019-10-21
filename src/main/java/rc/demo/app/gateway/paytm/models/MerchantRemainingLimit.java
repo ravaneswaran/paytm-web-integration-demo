@@ -1,9 +1,15 @@
 package rc.demo.app.gateway.paytm.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "merchantRemainingLimit")
 public class MerchantRemainingLimit {
 
+	@XmlElement(name = "limitType")
 	private String limitType;
 
+	@XmlElement(name = "amount")
 	private String amount;
 
 	public String getLimitType() {

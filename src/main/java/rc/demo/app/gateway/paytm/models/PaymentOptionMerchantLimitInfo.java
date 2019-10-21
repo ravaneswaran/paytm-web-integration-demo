@@ -2,12 +2,19 @@ package rc.demo.app.gateway.paytm.models;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "merchantLimitInfo")
 public class PaymentOptionMerchantLimitInfo {
 
+	@XmlElement(name = "excludePaymodes")
 	private String excludePaymodes;
 
+	@XmlElement(name = "message")
 	private String message;
 
+	@XmlElement(name = "paymentModes")
 	private List<MerchantRemainingLimit> merchantRemainingLimits;
 
 	public String getExcludePaymodes() {

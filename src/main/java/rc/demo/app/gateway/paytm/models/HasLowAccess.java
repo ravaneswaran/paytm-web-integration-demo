@@ -1,9 +1,15 @@
 package rc.demo.app.gateway.paytm.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "hasLowAccess")
 public class HasLowAccess {
 	
+	@XmlElement(name = "status")
 	private String status;
 	
+	@XmlElement(name = "msg")
 	private String message;
 
 	public String getStatus() {

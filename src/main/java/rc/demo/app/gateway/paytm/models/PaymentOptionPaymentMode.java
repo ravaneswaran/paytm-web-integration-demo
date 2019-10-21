@@ -2,26 +2,40 @@ package rc.demo.app.gateway.paytm.models;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "paymentMode")
 public class PaymentOptionPaymentMode {
 	
+	@XmlElement(name = "displayName")
 	private String displayName;
 	
+	@XmlElement(name = "feeAmount")
 	private String feeAmount;
 	
+	@XmlElement(name = "taxAmount")
 	private String taxAmount;
 	
+	@XmlElement(name = "totalTransactionAmount")
 	private String totalTransactionAmount;
 	
+	@XmlElement(name = "priority")
 	private String priority;
 	
+	@XmlElement(name = "onboarding")
 	private boolean onboarding;
 	
+	@XmlElement(name = "paymentMode")
 	private String paymentMode;
 	
+	@XmlElement(name = "isHybirdDisabled")
 	private boolean isHybirdDisabled;
 	
+	@XmlElement(name = "isDisabled")
 	private IsDisabled isDisabled;
 	
+	@XmlElement(name = "paymentChannelOption")
 	private List<PayChannelOption> payChannelOptions;
 
 	public String getDisplayName() {

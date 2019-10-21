@@ -1,15 +1,24 @@
 package rc.demo.app.gateway.paytm.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "payChannelOptions")
 public class PayChannelOption {
 	
+	@XmlElement(name = "iconUrl")
 	private String iconUrl;
 	
+	@XmlElement(name = "balanceInfo")
 	private String balanceInfo;
 	
+	@XmlElement(name = "isHybirdDisabled")
 	private boolean isHybirdDisabled;
 	
+	@XmlElement(name = "isDisabled")
 	private IsDisabled isDisabled;
 	
+	@XmlElement(name = "hasLowAccess")
 	private HasLowAccess hasLowAccess;
 
 	public String getIconUrl() {

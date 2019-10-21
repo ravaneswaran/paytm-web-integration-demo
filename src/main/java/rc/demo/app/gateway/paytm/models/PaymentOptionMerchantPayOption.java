@@ -2,14 +2,22 @@ package rc.demo.app.gateway.paytm.models;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "merchantPayOption")
 public class PaymentOptionMerchantPayOption {
 	
+	@XmlElement(name = "paymentMode")
 	private List<PaymentOptionPaymentMode> paymentOptionPaymentMode;
 	
+	@XmlElement(name = "savedInstruments")
 	private List<PaymentOptionSavedInstrument> paymentOptionSavedInstruments;
 	
-	private String userProfileSarvata;
+	@XmlElement(name = "userProfileSarvatra")
+	private String userProfileSarvatra;
 	
+	@XmlElement(name = "activeSubscriptions")
 	private String activeSubscriptions;
 
 	public List<PaymentOptionPaymentMode> getPaymentOptionPaymentMode() {
@@ -28,12 +36,12 @@ public class PaymentOptionMerchantPayOption {
 		this.paymentOptionSavedInstruments = paymentOptionSavedInstruments;
 	}
 
-	public String getUserProfileSarvata() {
-		return userProfileSarvata;
+	public String getUserProfileSarvatra() {
+		return userProfileSarvatra;
 	}
 
-	public void setUserProfileSarvata(String userProfileSarvata) {
-		this.userProfileSarvata = userProfileSarvata;
+	public void setUserProfileSarvatra(String userProfileSarvatra) {
+		this.userProfileSarvatra = userProfileSarvatra;
 	}
 
 	public String getActiveSubscriptions() {
