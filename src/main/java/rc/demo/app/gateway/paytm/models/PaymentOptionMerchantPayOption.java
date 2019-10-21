@@ -6,7 +6,7 @@ public class PaymentOptionMerchantPayOption {
 	
 	private List<PaymentOptionPaymentMode> paymentOptionPaymentMode;
 	
-	private List<PaymentOptionSavedInstruments> paymentOptionSavedInstruments;
+	private List<PaymentOptionSavedInstrument> paymentOptionSavedInstruments;
 	
 	private String userProfileSarvata;
 	
@@ -20,11 +20,11 @@ public class PaymentOptionMerchantPayOption {
 		this.paymentOptionPaymentMode = paymentOptionPaymentMode;
 	}
 
-	public List<PaymentOptionSavedInstruments> getPaymentOptionSavedInstruments() {
+	public List<PaymentOptionSavedInstrument> getPaymentOptionSavedInstruments() {
 		return paymentOptionSavedInstruments;
 	}
 
-	public void setPaymentOptionSavedInstruments(List<PaymentOptionSavedInstruments> paymentOptionSavedInstruments) {
+	public void setPaymentOptionSavedInstruments(List<PaymentOptionSavedInstrument> paymentOptionSavedInstruments) {
 		this.paymentOptionSavedInstruments = paymentOptionSavedInstruments;
 	}
 
