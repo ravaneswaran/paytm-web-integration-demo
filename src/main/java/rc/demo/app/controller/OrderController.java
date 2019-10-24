@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
+import rc.demo.app.gateway.paytm.models.BinDetail;
 import rc.demo.app.gateway.paytm.models.PaymentOption;
 import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.gateway.service.PaytmPaymentGatewayService;
@@ -101,10 +102,13 @@ public class OrderController extends OrderControllerHelper {
 				PaytmPaymentGatewayService.getInitiateSubscriptionService(sessionUser.getId(), orderId, "100.00", "INR",
 						"200.00", "PPI", "VARIABLE", 1, "MONTHLY", now, thirtyDays, 3, 1, 3).serve();
 
-				PaymentOption paymentOption = PaytmPaymentGatewayService
-						.getPaymentOptionService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
+				PaytmPaymentGatewayService.getPaymentOptionService(orderId, paytmTransaction.getBody().getTxnToken())
+						.serve();
 
-				System.out.println("paymentOption -------------------->>>>>>> " + paymentOption);
+				BinDetail binDetail = PaytmPaymentGatewayService
+						.getBinDetailService(orderId, paytmTransaction.getBody().getTxnToken(), "123456").serve();
+
+				System.out.println("binDetail -------------------->>>>>>> " + binDetail);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

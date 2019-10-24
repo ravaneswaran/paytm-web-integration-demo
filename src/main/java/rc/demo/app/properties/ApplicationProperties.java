@@ -111,5 +111,9 @@ public class ApplicationProperties {
 	public static final String getTransactionUpdateAPIEndPoint() {
 		return paytmProperties.getProperty("paytm.transaction.update.api.endpoint");
 	}
+	
+	public static final String getBinDetailAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.bin.detail.api.endpoint");
+	}
 
 }

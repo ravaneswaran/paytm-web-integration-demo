@@ -48,4 +48,8 @@ public class PaytmPaymentGatewayService {
 	public static PaymentOptionService getPaymentOptionService(String orderId, String transactionToken) {
 		return new PaymentOptionService(orderId, transactionToken);
 	}
+	
+	public static BinDetailService getBinDetailService(String orderId, String transactionToken, String bin) {
+		return new BinDetailService(orderId, transactionToken, bin);
+	}
 }
