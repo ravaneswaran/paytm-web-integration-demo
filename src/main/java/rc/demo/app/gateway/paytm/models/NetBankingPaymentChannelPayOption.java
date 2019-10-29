@@ -5,8 +5,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "paymentMode")
-public class PaymentOptionPaymentMode {
+@XmlRootElement(name = "nbPayOption")
+public class NetBankingPaymentChannelPayOption {
 	
 	@XmlElement(name = "displayName")
 	private String displayName;
@@ -29,14 +29,14 @@ public class PaymentOptionPaymentMode {
 	@XmlElement(name = "paymentMode")
 	private String paymentMode;
 	
-	@XmlElement(name = "isHybirdDisabled")
-	private boolean isHybirdDisabled;
+	@XmlElement(name = "isHybridDisabled")
+	private boolean isHybridDisabled;
+	
+	@XmlElement(name = "payChannelOptions")
+	private List<NetBankingPaymentPayChannelOption> payChannelOptions;
 	
 	@XmlElement(name = "isDisabled")
-	private NetBankingPaymentPayChannelOptionIsDisabled isDisabled;
-	
-	@XmlElement(name = "paymentChannelOption")
-	private List<NetBankingPaymentPayChannelOption> payChannelOptions;
+	private NetBankingPaymentChannelPayOptionIsDisabled isDisabled;
 
 	public String getDisplayName() {
 		return displayName;
@@ -94,20 +94,12 @@ public class PaymentOptionPaymentMode {
 		this.paymentMode = paymentMode;
 	}
 
-	public boolean isHybirdDisabled() {
-		return isHybirdDisabled;
+	public boolean isHybridDisabled() {
+		return isHybridDisabled;
 	}
 
-	public void setHybirdDisabled(boolean isHybirdDisabled) {
-		this.isHybirdDisabled = isHybirdDisabled;
-	}
-
-	public NetBankingPaymentPayChannelOptionIsDisabled getIsDisabled() {
-		return isDisabled;
-	}
-
-	public void setIsDisabled(NetBankingPaymentPayChannelOptionIsDisabled isDisabled) {
-		this.isDisabled = isDisabled;
+	public void setHybridDisabled(boolean isHybridDisabled) {
+		this.isHybridDisabled = isHybridDisabled;
 	}
 
 	public List<NetBankingPaymentPayChannelOption> getPayChannelOptions() {
@@ -116,5 +108,13 @@ public class PaymentOptionPaymentMode {
 
 	public void setPayChannelOptions(List<NetBankingPaymentPayChannelOption> payChannelOptions) {
 		this.payChannelOptions = payChannelOptions;
+	}
+
+	public NetBankingPaymentChannelPayOptionIsDisabled getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(NetBankingPaymentChannelPayOptionIsDisabled isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 }

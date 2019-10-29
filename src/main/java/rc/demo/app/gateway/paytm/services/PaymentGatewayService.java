@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 public interface PaymentGatewayService<T> {
 

@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 public class PaytmPaymentGatewayService {
 
@@ -51,5 +51,9 @@ public class PaytmPaymentGatewayService {
 	
 	public static BinDetailService getBinDetailService(String orderId, String transactionToken, String bin) {
 		return new BinDetailService(orderId, transactionToken, bin);
+	}
+	
+	public static NetBankingPaymentChannelService getNetBankingPaymentChannelService(String orderId, String transactionToken) {
+		return new NetBankingPaymentChannelService(orderId, transactionToken);
 	}
 }

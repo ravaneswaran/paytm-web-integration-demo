@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,31 +16,25 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.paytm.models.Refund;
+import rc.demo.app.gateway.paytm.models.RefundStatus;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class RefundService implements PaymentGatewayService<Refund> {
+public class RefundStatusService implements PaymentGatewayService<RefundStatus> {
 
-	private static final Logger LOGGER = Logger.getLogger(RefundService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RefundStatusService.class.getName());
 
 	private String orderId;
 
-	private String paytmTransactionId;
-
 	private String refundId;
 
-	private long amountToRefund;
-
-	public RefundService(String orderId, String paytmTransactionId, String refundId, long amountToRefund) {
+	public RefundStatusService(String orderId, String refundId) {
 		this.orderId = orderId;
-		this.paytmTransactionId = paytmTransactionId;
 		this.refundId = refundId;
-		this.amountToRefund = amountToRefund;
 	}
 
 	@Override
-	public Refund serve() {
+	public RefundStatus serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -53,20 +47,11 @@ public class RefundService implements PaymentGatewayService<Refund> {
 		 */
 		body.put("mid", ApplicationProperties.getMerchantId());
 
-		/* This has fixed value for refund transaction */
-		body.put("txnType", "REFUND");
-
 		/* Enter your order id for which refund needs to be initiated */
 		body.put("orderId", this.orderId);
 
-		/* Enter transaction id received from Paytm for respective successful order */
-		body.put("txnId", this.paytmTransactionId);
-
-		/* Enter numeric or alphanumeric unique refund id */
+		/* Enter refund id which was used for initiating refund */
 		body.put("refId", this.refundId);
-
-		/* Enter amount that needs to be refunded, this must be numeric */
-		body.put("refundAmount", String.valueOf(this.amountToRefund));
 
 		/**
 		 * Generate checksum by parameters we have in body You can get Checksum JAR from
@@ -98,16 +83,16 @@ public class RefundService implements PaymentGatewayService<Refund> {
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
 
-		/* for Production */
-		// URL url = new URL("https://securegw.paytm.in/refund/apply");
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL(ApplicationProperties.getRefundAPIEndPoint());
+			url = new URL(ApplicationProperties.getRefundStatusAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
+		/* for Production */
+		// URL url = new URL("https://securegw.paytm.in/v2/refund/status");
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
@@ -125,12 +110,11 @@ public class RefundService implements PaymentGatewayService<Refund> {
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund", responseData);
-			LOGGER.info(String.format("PAYTM REFUND STRING : %s", paytmTransactionString));
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund-status", responseData);
+			LOGGER.info(String.format("PAYTM REFUND STATUS STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<Refund> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Refund.class);
-			
+			JAXBUnMarshaller<RefundStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, RefundStatus.class);
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;

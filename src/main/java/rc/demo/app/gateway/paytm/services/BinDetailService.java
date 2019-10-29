@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

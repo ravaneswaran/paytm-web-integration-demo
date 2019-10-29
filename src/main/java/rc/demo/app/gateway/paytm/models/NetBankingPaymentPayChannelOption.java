@@ -3,8 +3,8 @@ package rc.demo.app.gateway.paytm.models;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "payChannelOptions")
-public class PayChannelOption {
+@XmlRootElement(name = "payChannelOption")
+public class NetBankingPaymentPayChannelOption {
 	
 	@XmlElement(name = "iconUrl")
 	private String iconUrl;
@@ -16,10 +16,10 @@ public class PayChannelOption {
 	private boolean isHybirdDisabled;
 	
 	@XmlElement(name = "isDisabled")
-	private IsDisabled isDisabled;
+	private NetBankingPaymentPayChannelOptionIsDisabled isDisabled;
 	
 	@XmlElement(name = "hasLowAccess")
-	private HasLowAccess hasLowAccess;
+	private NetBankingPaymentPayChannelOptionHasLowAccess hasLowAccess;
 
 	public String getIconUrl() {
 		return iconUrl;
@@ -45,19 +45,19 @@ public class PayChannelOption {
 		this.isHybirdDisabled = isHybirdDisabled;
 	}
 
-	public IsDisabled getIsDisabled() {
+	public NetBankingPaymentPayChannelOptionIsDisabled getIsDisabled() {
 		return isDisabled;
 	}
 
-	public void setIsDisabled(IsDisabled isDisabled) {
+	public void setIsDisabled(NetBankingPaymentPayChannelOptionIsDisabled isDisabled) {
 		this.isDisabled = isDisabled;
 	}
 
-	public HasLowAccess getHasLowAccess() {
+	public NetBankingPaymentPayChannelOptionHasLowAccess getHasLowAccess() {
 		return hasLowAccess;
 	}
 
-	public void setHasLowAccess(HasLowAccess hasLowAccess) {
+	public void setHasLowAccess(NetBankingPaymentPayChannelOptionHasLowAccess hasLowAccess) {
 		this.hasLowAccess = hasLowAccess;
 	}
 }

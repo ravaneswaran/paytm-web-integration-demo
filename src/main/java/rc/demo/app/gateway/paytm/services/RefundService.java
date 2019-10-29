@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,23 +16,31 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.LogMessageDecorator;
-import rc.demo.app.gateway.paytm.models.PaymentStatus;
+import rc.demo.app.gateway.paytm.models.Refund;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class PaymentStatusService implements PaymentGatewayService<PaymentStatus> {
+public class RefundService implements PaymentGatewayService<Refund> {
 
-	private static final Logger LOGGER = Logger.getLogger(PaymentStatusService.class.getName());
-	
+	private static final Logger LOGGER = Logger.getLogger(RefundService.class.getName());
+
 	private String orderId;
-	
-	public PaymentStatusService(String orderId) {
+
+	private String paytmTransactionId;
+
+	private String refundId;
+
+	private long amountToRefund;
+
+	public RefundService(String orderId, String paytmTransactionId, String refundId, long amountToRefund) {
 		this.orderId = orderId;
+		this.paytmTransactionId = paytmTransactionId;
+		this.refundId = refundId;
+		this.amountToRefund = amountToRefund;
 	}
 
 	@Override
-	public PaymentStatus serve() {
+	public Refund serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -45,8 +53,20 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 		 */
 		body.put("mid", ApplicationProperties.getMerchantId());
 
-		/* Enter your order id which needs to be check status for */
+		/* This has fixed value for refund transaction */
+		body.put("txnType", "REFUND");
+
+		/* Enter your order id for which refund needs to be initiated */
 		body.put("orderId", this.orderId);
+
+		/* Enter transaction id received from Paytm for respective successful order */
+		body.put("txnId", this.paytmTransactionId);
+
+		/* Enter numeric or alphanumeric unique refund id */
+		body.put("refId", this.refundId);
+
+		/* Enter amount that needs to be refunded, this must be numeric */
+		body.put("refundAmount", String.valueOf(this.amountToRefund));
 
 		/**
 		 * Generate checksum by parameters we have in body You can get Checksum JAR from
@@ -64,6 +84,12 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 		/* head parameters */
 		JSONObject head = new JSONObject();
 
+		/*
+		 * This is used when you have two different merchant keys. In case you have only
+		 * one please put - C11
+		 */
+		head.put("clientId", "C11");
+
 		/* put generated checksum value here */
 		head.put("signature", checksum);
 
@@ -72,19 +98,17 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
 
+		/* for Production */
+		// URL url = new URL("https://securegw.paytm.in/refund/apply");
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL(ApplicationProperties.getPaymentStatusAPIEndPoint());
+			url = new URL(ApplicationProperties.getRefundAPIEndPoint());
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
-		/* for Production */
-		// URL url = new
-		// URL("https://securegw.paytm.in/merchant-status/api/v1/getPaymentStatus");
 
 		try {
-			
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
@@ -101,19 +125,18 @@ public class PaymentStatusService implements PaymentGatewayService<PaymentStatus
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-payment-status", responseData);
-			LOGGER.info(LogMessageDecorator.decorateInfo(String.format("PAYTM PAYMENT STATUS STRING : %s", paytmTransactionString)));
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund", responseData);
+			LOGGER.info(String.format("PAYTM REFUND STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<PaymentStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, PaymentStatus.class);
-
+			JAXBUnMarshaller<Refund> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Refund.class);
+			
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
 		}
-
 	}
-	
+
 	static {
 		Handler handlerObj = new ConsoleHandler();
 		handlerObj.setLevel(Level.ALL);

@@ -116,4 +116,8 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.bin.detail.api.endpoint");
 	}
 
+	public static String getNetBankingPaymentChannelAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.netbanking.payment.channel.api.endpoint");
+	}
+
 }

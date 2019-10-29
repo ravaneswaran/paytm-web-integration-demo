@@ -1,4 +1,4 @@
-package rc.demo.app.gateway.service;
+package rc.demo.app.gateway.paytm.services;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,25 +16,33 @@ import org.json.JSONObject;
 
 import com.paytm.pg.merchant.CheckSumServiceHelper;
 
-import rc.demo.app.gateway.paytm.models.RefundStatus;
+import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class RefundStatusService implements PaymentGatewayService<RefundStatus> {
+public class InitiateTransactionService implements PaymentGatewayService<Transaction> {
 
-	private static final Logger LOGGER = Logger.getLogger(RefundStatusService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(InitiateTransactionService.class.getName());
+
+	private String userId;
 
 	private String orderId;
 
-	private String refundId;
+	private long amount;
 
-	public RefundStatusService(String orderId, String refundId) {
+	private String currency;
+
+	public InitiateTransactionService(String userId, String orderId, long amount, String currency) {
+
+		this.userId = userId;
 		this.orderId = orderId;
-		this.refundId = refundId;
+		this.amount = amount;
+		this.currency = currency;
+
 	}
 
 	@Override
-	public RefundStatus serve() {
+	public Transaction serve() {
 		/* initialize an object */
 		JSONObject paytmParams = new JSONObject();
 
@@ -42,16 +50,49 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 		JSONObject body = new JSONObject();
 
 		/*
+		 * for custom checkout value is 'Payment' and for intelligent router is
+		 * 'UNI_PAY'
+		 */
+		body.put("requestType", "Payment");
+
+		/*
 		 * Find your MID in your Paytm Dashboard at
 		 * https://dashboard.paytm.com/next/apikeys
 		 */
 		body.put("mid", ApplicationProperties.getMerchantId());
 
-		/* Enter your order id for which refund needs to be initiated */
+		/*
+		 * Find your Website Name in your Paytm Dashboard at
+		 * https://dashboard.paytm.com/next/apikeys
+		 */
+		body.put("websiteName", "localhost");
+
+		/* Enter your unique order id */
 		body.put("orderId", this.orderId);
 
-		/* Enter refund id which was used for initiating refund */
-		body.put("refId", this.refundId);
+		/* on completion of transaction, we will send you the response on this URL */
+		body.put("callbackUrl", String.format(ApplicationProperties.getTransactionCallbackURL(), this.orderId));
+
+		/* initialize an object for txnAmount */
+		JSONObject txnAmount = new JSONObject();
+
+		/* Transaction Amount Value */
+		txnAmount.put("value", this.amount);
+
+		/* Transaction Amount Currency */
+		txnAmount.put("currency", this.currency);
+
+		/* initialize an object for userInfo */
+		JSONObject userInfo = new JSONObject();
+
+		/* unique id that belongs to your customer */
+		userInfo.put("custId", this.userId);
+
+		/* put txnAmount object in body */
+		body.put("txnAmount", txnAmount);
+
+		/* put userInfo object in body */
+		body.put("userInfo", userInfo);
 
 		/**
 		 * Generate checksum by parameters we have in body You can get Checksum JAR from
@@ -69,12 +110,6 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 		/* head parameters */
 		JSONObject head = new JSONObject();
 
-		/*
-		 * This is used when you have two different merchant keys. In case you have only
-		 * one please put - C11
-		 */
-		head.put("clientId", "C11");
-
 		/* put generated checksum value here */
 		head.put("signature", checksum);
 
@@ -83,16 +118,20 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 		paytmParams.put("head", head);
 		String post_data = paytmParams.toString();
 
+		LOGGER.info(String.format("REQUST DATA : %s", post_data));
+
 		/* for Staging */
 		URL url = null;
 		try {
-			url = new URL(ApplicationProperties.getRefundStatusAPIEndPoint());
+			url = new URL(String.format(ApplicationProperties.getInitiateTransactionAPIEndPoint(),
+					ApplicationProperties.getMerchantId(), this.orderId));
 		} catch (MalformedURLException e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 
 		/* for Production */
-		// URL url = new URL("https://securegw.paytm.in/v2/refund/status");
+		// URL url = new
+		// URL("https://securegw.paytm.in/theia/api/v1/initiateTransaction?mid=YOUR_MID_HERE&orderId=YOUR_ORDER_ID");
 		try {
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
@@ -100,6 +139,7 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 			connection.setDoOutput(true);
 
 			DataOutputStream requestWriter = new DataOutputStream(connection.getOutputStream());
+
 			requestWriter.writeBytes(post_data);
 			requestWriter.close();
 			String responseData = "";
@@ -110,11 +150,12 @@ public class RefundStatusService implements PaymentGatewayService<RefundStatus> 
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-refund-status", responseData);
-			LOGGER.info(String.format("PAYTM REFUND STATUS STRING : %s", paytmTransactionString));
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-transaction", responseData);
+			LOGGER.info(String.format("PAYTM TRANSACTION STRING : %s", paytmTransactionString));
 
-			JAXBUnMarshaller<RefundStatus> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, RefundStatus.class);
+			JAXBUnMarshaller<Transaction> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, Transaction.class);
+
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
