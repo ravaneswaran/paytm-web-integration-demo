@@ -14,6 +14,7 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.BinDetail;
+import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
 import rc.demo.app.gateway.paytm.models.NetBankingPaymentChannel;
 import rc.demo.app.gateway.paytm.models.PaymentOption;
 import rc.demo.app.gateway.paytm.models.Transaction;
@@ -109,10 +110,15 @@ public class OrderController extends OrderControllerHelper {
 				PaytmPaymentGatewayService
 						.getBinDetailService(orderId, paytmTransaction.getBody().getTxnToken(), "123456").serve();
 
-				NetBankingPaymentChannel netBankingPaymentChannel = PaytmPaymentGatewayService
+				PaytmPaymentGatewayService
 						.getNetBankingPaymentChannelService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
 
-				System.out.println("netBankingPaymentChannel -------------------->>>>>>> " + netBankingPaymentChannel);
+				String[] channelCodes = { "HDFC", "ICICI" };
+				FetchEMIDetails fetchEMIDetails = PaytmPaymentGatewayService
+						.getFetchEMIDetailsService(orderId, paytmTransaction.getBody().getTxnToken(), channelCodes)
+						.serve();
+
+				System.out.println("fetchEMIDetails -------------------->>>>>>> " + fetchEMIDetails);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

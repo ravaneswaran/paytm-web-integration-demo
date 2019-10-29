@@ -48,12 +48,18 @@ public class PaytmPaymentGatewayService {
 	public static PaymentOptionService getPaymentOptionService(String orderId, String transactionToken) {
 		return new PaymentOptionService(orderId, transactionToken);
 	}
-	
+
 	public static BinDetailService getBinDetailService(String orderId, String transactionToken, String bin) {
 		return new BinDetailService(orderId, transactionToken, bin);
 	}
-	
-	public static NetBankingPaymentChannelService getNetBankingPaymentChannelService(String orderId, String transactionToken) {
+
+	public static NetBankingPaymentChannelService getNetBankingPaymentChannelService(String orderId,
+			String transactionToken) {
 		return new NetBankingPaymentChannelService(orderId, transactionToken);
+	}
+
+	public static FetchEMIDetailsService getFetchEMIDetailsService(String orderId,
+			String transactionToken, String[] channelCodes) {
+		return new FetchEMIDetailsService(orderId, transactionToken, channelCodes);
 	}
 }

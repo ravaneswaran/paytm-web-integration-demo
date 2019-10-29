@@ -120,4 +120,8 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.netbanking.payment.channel.api.endpoint");
 	}
 
+	public static String getFetchEMIDetailsAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.fetch.emi.details.api.endpoint");
+	}
+
 }
