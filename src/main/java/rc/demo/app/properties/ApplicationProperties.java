@@ -123,5 +123,9 @@ public class ApplicationProperties {
 	public static String getFetchEMIDetailsAPIEndPoint() {
 		return paytmProperties.getProperty("paytm.fetch.emi.details.api.endpoint");
 	}
+	
+	public static String getSendOTPAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.sent.otp.api.endpoint");
+	}
 
 }

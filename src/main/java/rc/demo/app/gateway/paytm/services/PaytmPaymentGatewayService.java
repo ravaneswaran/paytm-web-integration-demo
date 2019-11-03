@@ -58,8 +58,12 @@ public class PaytmPaymentGatewayService {
 		return new NetBankingPaymentChannelService(orderId, transactionToken);
 	}
 
-	public static FetchEMIDetailsService getFetchEMIDetailsService(String orderId,
-			String transactionToken, String[] channelCodes) {
+	public static FetchEMIDetailsService getFetchEMIDetailsService(String orderId, String transactionToken,
+			String[] channelCodes) {
 		return new FetchEMIDetailsService(orderId, transactionToken, channelCodes);
+	}
+
+	public static OTPService getOTPService(String orderId, String transactionToken, String mobileNumber) {
+		return new OTPService(orderId, transactionToken, mobileNumber);
 	}
 }

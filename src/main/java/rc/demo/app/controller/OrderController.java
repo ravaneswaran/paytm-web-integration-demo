@@ -14,6 +14,7 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
+import rc.demo.app.gateway.paytm.models.OTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.gateway.paytm.services.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
@@ -111,11 +112,14 @@ public class OrderController extends OrderControllerHelper {
 						.getNetBankingPaymentChannelService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
 
 				String[] channelCodes = { "HDFC", "ICICI" };
-				FetchEMIDetails fetchEMIDetails = PaytmPaymentGatewayService
+				PaytmPaymentGatewayService
 						.getFetchEMIDetailsService(orderId, paytmTransaction.getBody().getTxnToken(), channelCodes)
 						.serve();
+				
+				String mobileNumber = "7777777777";
+				OTP otp = PaytmPaymentGatewayService.getOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
 
-				System.out.println("fetchEMIDetails -------------------->>>>>>> " + fetchEMIDetails);
+				System.out.println("fetchEMIDetails -------------------->>>>>>> " + otp);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {
