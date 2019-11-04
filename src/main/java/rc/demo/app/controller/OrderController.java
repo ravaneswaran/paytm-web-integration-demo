@@ -14,7 +14,7 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
-import rc.demo.app.gateway.paytm.models.OTP;
+import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
 import rc.demo.app.gateway.paytm.services.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
@@ -117,7 +117,7 @@ public class OrderController extends OrderControllerHelper {
 						.serve();
 				
 				String mobileNumber = "7777777777";
-				OTP otp = PaytmPaymentGatewayService.getOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
+				SendOTP otp = PaytmPaymentGatewayService.getOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
 
 				System.out.println("fetchEMIDetails -------------------->>>>>>> " + otp);
 

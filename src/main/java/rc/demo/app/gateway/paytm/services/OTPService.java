@@ -15,11 +15,11 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 
 import rc.demo.app.LogMessageDecorator;
-import rc.demo.app.gateway.paytm.models.OTP;
+import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class OTPService implements PaymentGatewayService<OTP> {
+public class OTPService implements PaymentGatewayService<SendOTP> {
 
 	private static final Logger LOGGER = Logger.getLogger(OTPService.class.getName());
 
@@ -36,7 +36,7 @@ public class OTPService implements PaymentGatewayService<OTP> {
 	}
 
 	@Override
-	public OTP serve() {
+	public SendOTP serve() {
 
 		JSONObject head = new JSONObject();
 		head.put("clientId", "C11");
@@ -88,8 +88,8 @@ public class OTPService implements PaymentGatewayService<OTP> {
 			LOGGER.info(LogMessageDecorator
 					.decorateInfo(String.format("PAYTM SEND OTP STRING : %s", paytmTransactionString)));
 
-			JAXBUnMarshaller<OTP> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, OTP.class);
+			JAXBUnMarshaller<SendOTP> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, SendOTP.class);
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
