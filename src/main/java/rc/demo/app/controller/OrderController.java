@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
+import rc.demo.app.gateway.paytm.models.BalanceInfo;
 import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
 import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
@@ -122,10 +123,13 @@ public class OrderController extends OrderControllerHelper {
 						.getSendOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
 
 				String otp = "987654";
-				ValidateOTP validateOTP = PaytmPaymentGatewayService
+				PaytmPaymentGatewayService
 						.getValidateOTPService(orderId, paytmTransaction.getBody().getTxnToken(), otp).serve();
+				
+				BalanceInfo balanceInfo = PaytmPaymentGatewayService.getBalanceInfoService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
+				
 
-				System.out.println("validateOTP -------------------->>>>>>> " + validateOTP);
+				System.out.println("balanceInfo -------------------->>>>>>> " + balanceInfo);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

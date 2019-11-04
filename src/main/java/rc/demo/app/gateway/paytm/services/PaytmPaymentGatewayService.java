@@ -70,4 +70,8 @@ public class PaytmPaymentGatewayService {
 	public static ValidateOTPService getValidateOTPService(String orderId, String transactionToken, String otp) {
 		return new ValidateOTPService(orderId, transactionToken, otp);
 	}
+
+	public static BalanceInfoService getBalanceInfoService(String orderId, String transactionToken) {
+		return new BalanceInfoService(orderId, transactionToken);
+	}
 }

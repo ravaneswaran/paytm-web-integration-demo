@@ -132,4 +132,8 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.validate.otp.api.endpoint");
 	}
 
+	public static String getBalanceInfoAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.balance.info.api.endpoint");
+	}
+
 }
