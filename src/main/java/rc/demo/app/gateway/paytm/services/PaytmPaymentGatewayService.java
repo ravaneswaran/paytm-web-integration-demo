@@ -63,7 +63,11 @@ public class PaytmPaymentGatewayService {
 		return new FetchEMIDetailsService(orderId, transactionToken, channelCodes);
 	}
 
-	public static OTPService getOTPService(String orderId, String transactionToken, String mobileNumber) {
-		return new OTPService(orderId, transactionToken, mobileNumber);
+	public static SendOTPService getSendOTPService(String orderId, String transactionToken, String mobileNumber) {
+		return new SendOTPService(orderId, transactionToken, mobileNumber);
+	}
+
+	public static ValidateOTPService getValidateOTPService(String orderId, String transactionToken, String otp) {
+		return new ValidateOTPService(orderId, transactionToken, otp);
 	}
 }

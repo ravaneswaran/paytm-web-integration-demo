@@ -15,29 +15,29 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 
 import rc.demo.app.LogMessageDecorator;
-import rc.demo.app.gateway.paytm.models.SendOTP;
+import rc.demo.app.gateway.paytm.models.ValidateOTP;
 import rc.demo.app.properties.ApplicationProperties;
 import rc.demo.app.unmarshaller.JAXBUnMarshaller;
 
-public class OTPService implements PaymentGatewayService<SendOTP> {
-
-	private static final Logger LOGGER = Logger.getLogger(OTPService.class.getName());
-
+public class ValidateOTPService implements PaymentGatewayService<ValidateOTP> {
+	
+	private static final Logger LOGGER = Logger.getLogger(ValidateOTPService.class.getName());
+	
 	private String orderId;
-
+	
 	private String transactionToken;
-
-	private String mobileNumber;
-
-	public OTPService(String orderId, String transactionToken, String mobileNumber) {
+	
+	private String otp;
+	
+	public ValidateOTPService(String orderId, String transactionToken, String otp) {
 		this.orderId = orderId;
 		this.transactionToken = transactionToken;
-		this.mobileNumber = mobileNumber;
+		this.otp = otp;
 	}
 
 	@Override
-	public SendOTP serve() {
-
+	public ValidateOTP serve() {
+	
 		JSONObject head = new JSONObject();
 		head.put("clientId", "C11");
 		head.put("version", "v1");
@@ -46,7 +46,7 @@ public class OTPService implements PaymentGatewayService<SendOTP> {
 		head.put("txnToken", this.transactionToken);
 
 		JSONObject body = new JSONObject();
-		body.put("mobileNumber", this.mobileNumber);
+		body.put("otp", this.otp);
 
 		JSONObject paytmParams = new JSONObject();
 		paytmParams.put("head", head);
@@ -55,7 +55,7 @@ public class OTPService implements PaymentGatewayService<SendOTP> {
 		// for staging
 		URL url = null;
 		try {
-			String urlString = String.format(ApplicationProperties.getSendOTPAPIEndPoint(),
+			String urlString = String.format(ApplicationProperties.getValidateOTPAPIEndPoint(),
 					ApplicationProperties.getMerchantId(), this.orderId);
 			url = new URL(urlString);
 		} catch (MalformedURLException e) {
@@ -84,18 +84,18 @@ public class OTPService implements PaymentGatewayService<SendOTP> {
 			}
 			responseReader.close();
 
-			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-send-otp", responseData);
+			String paytmTransactionString = String.format("{\"%s\":%s}", "paytm-validate-otp", responseData);
 			LOGGER.info(LogMessageDecorator
-					.decorateInfo(String.format("PAYTM SEND OTP STRING : %s", paytmTransactionString)));
+					.decorateInfo(String.format("PAYTM VALIDATE OTP STRING : %s", paytmTransactionString)));
 
-			JAXBUnMarshaller<SendOTP> jaxbUnMarshaller = new JAXBUnMarshaller<>();
-			return jaxbUnMarshaller.unMarshall(paytmTransactionString, SendOTP.class);
+			JAXBUnMarshaller<ValidateOTP> jaxbUnMarshaller = new JAXBUnMarshaller<>();
+			return jaxbUnMarshaller.unMarshall(paytmTransactionString, ValidateOTP.class);
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 			return null;
 		}
 	}
-
+	
 	static {
 		Handler handlerObj = new ConsoleHandler();
 		handlerObj.setLevel(Level.ALL);
@@ -103,4 +103,5 @@ public class OTPService implements PaymentGatewayService<SendOTP> {
 		LOGGER.setLevel(Level.ALL);
 		LOGGER.setUseParentHandlers(false);
 	}
+
 }

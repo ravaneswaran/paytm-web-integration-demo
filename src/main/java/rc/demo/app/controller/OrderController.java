@@ -16,6 +16,7 @@ import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
 import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
+import rc.demo.app.gateway.paytm.models.ValidateOTP;
 import rc.demo.app.gateway.paytm.services.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
 import rc.demo.app.local.service.OrderProductJoinLocalService;
@@ -115,11 +116,16 @@ public class OrderController extends OrderControllerHelper {
 				PaytmPaymentGatewayService
 						.getFetchEMIDetailsService(orderId, paytmTransaction.getBody().getTxnToken(), channelCodes)
 						.serve();
-				
-				String mobileNumber = "7777777777";
-				SendOTP otp = PaytmPaymentGatewayService.getOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
 
-				System.out.println("fetchEMIDetails -------------------->>>>>>> " + otp);
+				String mobileNumber = "7777777777";
+				PaytmPaymentGatewayService
+						.getSendOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
+
+				String otp = "987654";
+				ValidateOTP validateOTP = PaytmPaymentGatewayService
+						.getValidateOTPService(orderId, paytmTransaction.getBody().getTxnToken(), otp).serve();
+
+				System.out.println("validateOTP -------------------->>>>>>> " + validateOTP);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

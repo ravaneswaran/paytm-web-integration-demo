@@ -128,4 +128,8 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.sent.otp.api.endpoint");
 	}
 
+	public static String getValidateOTPAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.validate.otp.api.endpoint");
+	}
+
 }
