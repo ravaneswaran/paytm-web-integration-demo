@@ -14,6 +14,7 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.BalanceInfo;
+import rc.demo.app.gateway.paytm.models.DirectBankRequest;
 import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
 import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
@@ -122,14 +123,18 @@ public class OrderController extends OrderControllerHelper {
 				PaytmPaymentGatewayService
 						.getSendOTPService(orderId, paytmTransaction.getBody().getTxnToken(), mobileNumber).serve();
 
-				String otp = "987654";
+				String otp1 = "987654";
 				PaytmPaymentGatewayService
-						.getValidateOTPService(orderId, paytmTransaction.getBody().getTxnToken(), otp).serve();
-				
-				BalanceInfo balanceInfo = PaytmPaymentGatewayService.getBalanceInfoService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
-				
+						.getValidateOTPService(orderId, paytmTransaction.getBody().getTxnToken(), otp1).serve();
 
-				System.out.println("balanceInfo -------------------->>>>>>> " + balanceInfo);
+				BalanceInfo balanceInfo = PaytmPaymentGatewayService
+						.getBalanceInfoService(orderId, paytmTransaction.getBody().getTxnToken()).serve();
+
+				String otp2 = "987654";
+				DirectBankRequest directBankRequest = PaytmPaymentGatewayService
+						.getDirectBankRequestService(orderId, paytmTransaction.getBody().getTxnToken(), otp2).serve();
+
+				System.out.println("directBankRequest -------------------->>>>>>> " + directBankRequest);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

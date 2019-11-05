@@ -74,4 +74,10 @@ public class PaytmPaymentGatewayService {
 	public static BalanceInfoService getBalanceInfoService(String orderId, String transactionToken) {
 		return new BalanceInfoService(orderId, transactionToken);
 	}
+
+	public static DirectBankRequestService getDirectBankRequestService(String orderId, String transactionToken,
+			String otp) {
+		return new DirectBankRequestService(orderId, transactionToken, otp);
+	}
+
 }
