@@ -14,11 +14,9 @@ import rc.demo.app.RequestParameter;
 import rc.demo.app.SessionAttributes;
 import rc.demo.app.controller.helper.OrderControllerHelper;
 import rc.demo.app.gateway.paytm.models.BalanceInfo;
+import rc.demo.app.gateway.paytm.models.CancelSubscription;
 import rc.demo.app.gateway.paytm.models.DirectBankRequest;
-import rc.demo.app.gateway.paytm.models.FetchEMIDetails;
-import rc.demo.app.gateway.paytm.models.SendOTP;
 import rc.demo.app.gateway.paytm.models.Transaction;
-import rc.demo.app.gateway.paytm.models.ValidateOTP;
 import rc.demo.app.gateway.paytm.services.PaytmPaymentGatewayService;
 import rc.demo.app.local.service.OrderLocalService;
 import rc.demo.app.local.service.OrderProductJoinLocalService;
@@ -134,7 +132,14 @@ public class OrderController extends OrderControllerHelper {
 				DirectBankRequest directBankRequest = PaytmPaymentGatewayService
 						.getDirectBankRequestService(orderId, paytmTransaction.getBody().getTxnToken(), otp2).serve();
 
-				System.out.println("directBankRequest -------------------->>>>>>> " + directBankRequest);
+				String subscriptionId = "";
+				String ssoToken = "";
+				String signature = "";
+				String tokenType = "";
+				CancelSubscription cancelSubscription = PaytmPaymentGatewayService
+						.getCancelSubscriptionService(subscriptionId, ssoToken, signature, tokenType).serve();
+
+				System.out.println("cancelSubscription -------------------->>>>>>> " + cancelSubscription);
 
 				httpSession.setAttribute(SessionAttributes.PAYTM_TRANSACTION, paytmTransaction);
 				try {

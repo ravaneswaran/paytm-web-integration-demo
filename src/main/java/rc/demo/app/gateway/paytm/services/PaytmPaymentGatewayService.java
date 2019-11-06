@@ -80,4 +80,9 @@ public class PaytmPaymentGatewayService {
 		return new DirectBankRequestService(orderId, transactionToken, otp);
 	}
 
+	public static CancelSubscriptionService getCancelSubscriptionService(String subscriptionId, String ssoToken,
+			String signature, String tokenType) {
+		return new CancelSubscriptionService(subscriptionId, ssoToken, signature, tokenType);
+	}
+
 }

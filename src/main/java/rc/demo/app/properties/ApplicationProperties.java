@@ -140,4 +140,7 @@ public class ApplicationProperties {
 		return paytmProperties.getProperty("paytm.direct.bank.request.api.endpoint");
 	}
 
+	public static String getCancelSubscriptionAPIEndPoint() {
+		return paytmProperties.getProperty("paytm.cancel.subscription.api.endpoint");
+	}
 }
